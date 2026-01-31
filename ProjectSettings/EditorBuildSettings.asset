@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Settings.unity
     guid: 1944f837c2b59f34bbf4c8e3131fb925
+  - enabled: 1
+    path: Assets/Scenes/Xavier2.unity
+    guid: a9186bfbf476a46478ff025ff2748122
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

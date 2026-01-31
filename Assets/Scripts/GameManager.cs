@@ -8,15 +8,16 @@ public class GameManager : MonoBehaviour
 
     private string previousScene;
     public static event Action OnPlayerTurnStarted;
-
-    public TurnState CurrentTurn { get; private set; } = TurnState.None;
+    public static event System.Action<GameManager.TurnState> OnTurnChanged;
     public enum TurnState
     {
         None,
         PlayerTurn,
         EnemyTurn,
-        Shopping
+        ShoppingTurn
     }
+
+    public TurnState CurrentTurn { get; private set; } = TurnState.None;
 
     private void Awake()
     {
@@ -39,7 +40,7 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("Xavier2");
 
         StartPlayerTurn();
     }
@@ -50,6 +51,39 @@ public class GameManager : MonoBehaviour
         Debug.Log("Player Turn");
 
         OnPlayerTurnStarted?.Invoke();
+
+        OnTurnChanged?.Invoke(CurrentTurn);
+    }
+
+    public void OnEndTurnButtonPressed()
+    {
+        if (CurrentTurn != TurnState.PlayerTurn) return;
+
+        // Clear the player's hand
+        HandManager handManager = FindObjectOfType<HandManager>();
+        if (handManager != null)
+        {
+            handManager.ClearHand();
+        }
+
+        Debug.Log("Player pressed End Turn");
+        StartEnemyTurn(); // switch to enemy turn
+    }
+
+    public void StartEnemyTurn()
+    {
+        CurrentTurn = TurnState.EnemyTurn;
+        Debug.Log("Enemy Turn");
+
+        OnTurnChanged?.Invoke(CurrentTurn);
+
+        // TEMP: automatically end enemy turn after 1 second
+        Invoke(nameof(EndEnemyTurn), 1f);
+    }
+
+    public void EndEnemyTurn()
+    {
+        StartPlayerTurn();
     }
 
 

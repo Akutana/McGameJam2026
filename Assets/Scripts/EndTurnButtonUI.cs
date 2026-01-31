@@ -21,13 +21,9 @@ public class EndTurnButtonUI : MonoBehaviour
         GameManager.OnTurnChanged += HandleTurnChanged;
     }
 
-    private void OnDisable()
-    {
-        GameManager.OnTurnChanged -= HandleTurnChanged;
-    }
-
     private void HandleTurnChanged(GameManager.TurnState newTurn)
     {
+        Debug.Log($"EndTurnButtonUI: Turn changed to {newTurn}");
         // Show button only on player's turn
         btn.gameObject.SetActive(newTurn == GameManager.TurnState.PlayerTurn);
     }

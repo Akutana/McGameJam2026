@@ -26,7 +26,6 @@ public class AudioManager : MonoBehaviour
     private void Update()
     {
         mixer.GetFloat("MusicVolume", out float v);
-        Debug.Log("Mixer music dB = " + v);
 
     }
 

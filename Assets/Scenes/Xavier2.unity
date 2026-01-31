@@ -334,10 +334,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandManager
   maxHandSize: 5
-  cardPrefab: {fileID: 282516061887738462, guid: 0e76c06c6213e814abb715503963f32e, type: 3}
-  splineContainer: {fileID: 715291366}
-  spawnPoint: {fileID: 751955855}
   drawNumber: 3
+  spawnPoint: {fileID: 751955855}
+  splineContainer: {fileID: 715291366}
+  cardPrefab: {fileID: 282516061887738462, guid: 0e76c06c6213e814abb715503963f32e, type: 3}
+  availableCards:
+  - {fileID: 11400000, guid: b1c85dfab9d1d654ea032a78882ba6c1, type: 2}
+  - {fileID: 11400000, guid: e49abe4b887f20c40a9461cbe5d8c851, type: 2}
+  - {fileID: 11400000, guid: 4388e64ca53cb474a958757bd781da83, type: 2}
 --- !u!4 &683440752
 Transform:
   m_ObjectHideFlags: 0
@@ -1415,7 +1419,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1877461655435629204, guid: 0b0bc0d74da469041b6c9a9331234b6f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 0b0bc0d74da469041b6c9a9331234b6f, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

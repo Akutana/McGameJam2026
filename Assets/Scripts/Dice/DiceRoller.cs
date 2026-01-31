@@ -24,12 +24,6 @@ public class DiceRoller : MonoBehaviour
     {
         if (rb == null) { return; }
 
-        if (Input.GetMouseButtonDown(0) && !isRolling)
-        {
-            isRolling = true;
-            RollDice();
-        }
-
         if (rb.linearVelocity.magnitude < 0.1f)
         {
             CheckTopSide();
@@ -38,6 +32,16 @@ public class DiceRoller : MonoBehaviour
         if (rb.linearVelocity.y == 0)
         {
             isRolling = false;
+        }
+    }
+
+    private void OnMouseEnter()
+    {
+        Debug.Log("Mouse on dice");
+        if (Input.GetMouseButtonDown(0) && !isRolling)
+        {
+            isRolling = true;
+            RollDice();
         }
     }
 

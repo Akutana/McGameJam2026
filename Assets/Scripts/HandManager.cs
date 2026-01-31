@@ -6,18 +6,40 @@ using UnityEngine.Splines;
 
 public class HandManager : MonoBehaviour
 {
+    public static HandManager Instance { get; private set; }
 
     [SerializeField] private int maxHandSize = 5;
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private SplineContainer splineContainer;
     [SerializeField] private Transform spawnPoint;
+    [SerializeField] private int drawNumber = 3;
 
     private List<GameObject> handCards = new();
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+
+    private void Start()
+    {
+        TryDrawInitialHand();
+    }
+
+    private void TryDrawInitialHand()
+    {
+        if (GameManager.Instance == null) return;
+        if (GameManager.Instance.CurrentTurn != GameManager.TurnState.PlayerTurn) return;
+
+        Debug.Log("HandManager: Drawing initial hand");
+
+        for (int i = 0; i < drawNumber; i++)
         {
             DrawCard();
         }
@@ -64,5 +86,36 @@ public class HandManager : MonoBehaviour
 
     }
 
+    private void OnEnable()
+    {
+        GameManager.OnPlayerTurnStarted += HandlePlayerTurnStarted;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnPlayerTurnStarted -= HandlePlayerTurnStarted;
+    }
+
+    private void HandlePlayerTurnStarted()
+    {
+        Debug.Log("HandManager: Player Turn Started - Drawing Cards");
+        for (int i = 0; i < drawNumber; i++)
+        {
+            DrawCard();
+        }
+    }
+
+    public void ClearHand()
+    {
+        // Destroy all card GameObjects
+        foreach (var card in handCards)
+        {
+            if (card != null)
+                Destroy(card);
+        }
+
+        // Clear the list
+        handCards.Clear();
+    }
 
 }

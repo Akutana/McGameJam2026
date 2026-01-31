@@ -1,15 +1,27 @@
 using UnityEngine;
+using System;
 using UnityEngine.SceneManagement;
-using UnityEngine.SocialPlatforms.Impl;
 
-public class GameManager: MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
     private string previousScene;
-
-    void Awake()
+    public static event Action OnPlayerTurnStarted;
+    public static event System.Action<GameManager.TurnState> OnTurnChanged;
+    public enum TurnState
     {
+        None,
+        PlayerTurn,
+        EnemyTurn,
+        ShoppingTurn
+    }
+
+    public TurnState CurrentTurn { get; private set; } = TurnState.None;
+
+    private void Awake()
+    {
+        // Singleton pattern
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -23,13 +35,57 @@ public class GameManager: MonoBehaviour
     public void ResetGame()
     {
         Debug.Log("Resetting game");
+        // reset game state here later
     }
 
     public void StartGame()
     {
-        Debug.Log("hujfdkshjkhs");  
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("Xavier2");
+
+        StartPlayerTurn();
     }
+
+    public void StartPlayerTurn()
+    {
+        CurrentTurn = TurnState.PlayerTurn;
+        Debug.Log("Player Turn");
+
+        OnPlayerTurnStarted?.Invoke();
+
+        OnTurnChanged?.Invoke(CurrentTurn);
+    }
+
+    public void OnEndTurnButtonPressed()
+    {
+        if (CurrentTurn != TurnState.PlayerTurn) return;
+
+        // Clear the player's hand
+        HandManager handManager = FindObjectOfType<HandManager>();
+        if (handManager != null)
+        {
+            handManager.ClearHand();
+        }
+
+        Debug.Log("Player pressed End Turn");
+        StartEnemyTurn(); // switch to enemy turn
+    }
+
+    public void StartEnemyTurn()
+    {
+        CurrentTurn = TurnState.EnemyTurn;
+        Debug.Log("Enemy Turn");
+
+        OnTurnChanged?.Invoke(CurrentTurn);
+
+        // TEMP: automatically end enemy turn after 1 second
+        Invoke(nameof(EndEnemyTurn), 1f);
+    }
+
+    public void EndEnemyTurn()
+    {
+        StartPlayerTurn();
+    }
+
 
     public void RestartGame()
     {
@@ -45,6 +101,13 @@ public class GameManager: MonoBehaviour
 
     public void LoadPreviousScene()
     {
+        // Safety fallback
+        if (string.IsNullOrEmpty(previousScene))
+        {
+            SceneManager.LoadScene("MainMenu");
+            return;
+        }
+
         SceneManager.LoadScene(previousScene);
     }
 
@@ -53,7 +116,7 @@ public class GameManager: MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-    Application.Quit();
+        Application.Quit();
 #endif
     }
 }

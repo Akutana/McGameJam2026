@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEditor.Rendering;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class DiceRoller : MonoBehaviour
     [SerializeField] private float rollingForce;
     [SerializeField] private DiceSide[] diceSides;
     private Rigidbody rb;
+    private TextMeshPro textMesh;
 
     private float forceX, forceY, forceZ;
     private bool isRolling;
@@ -16,6 +18,7 @@ public class DiceRoller : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        textMesh = GetComponentInChildren<TextMeshPro>();
         rb.isKinematic = true;
         transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
     }
@@ -29,20 +32,28 @@ public class DiceRoller : MonoBehaviour
             CheckTopSide();
         }
 
-        if (rb.linearVelocity.y == 0)
+        if (rb.IsSleeping())
         {
             isRolling = false;
         }
+
+        TextLogic();
     }
 
     private void OnMouseOver()
     {
-        Debug.Log("Mouse on dice");
+        textMesh.enabled = true;
+
         if (Input.GetMouseButtonDown(0) && !isRolling)
         {
             isRolling = true;
             RollDice();
         }
+    }
+
+    private void OnMouseExit()
+    {
+        textMesh.enabled = false;
     }
 
     private void RollDice()
@@ -70,4 +81,15 @@ public class DiceRoller : MonoBehaviour
         }
     }
 
+    private void TextLogic()
+    {
+        if (isRolling)
+        {
+            textMesh.enabled = false;
+        }
+
+        textMesh.transform.LookAt(Camera.main.transform);
+        textMesh.transform.position = transform.position + Vector3.up * -0.1f;
+        textMesh.transform.Rotate(0, 180, 0);
+    }
 }

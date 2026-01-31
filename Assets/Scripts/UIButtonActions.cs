@@ -1,29 +1,41 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIButtonActions : MonoBehaviour
 {
-    public void QuitGame()
+    public Slider musicSlider;
+    public Slider sfxSlider;
+
+    void Start()
     {
-        GameManager.Instance.QuitGame();
-    }
-    
-    public void RestartGame()
-    {
-        GameManager.Instance.RestartGame();
+        if (musicSlider != null)
+        {
+            musicSlider.SetValueWithoutNotify(
+                PlayerPrefs.GetFloat("MusicVolume", 1f)
+            );
+        }
+
+        if (sfxSlider != null)
+        {
+            sfxSlider.SetValueWithoutNotify(
+                PlayerPrefs.GetFloat("SFXVolume", 1f)
+            );
+        }
     }
 
-    public void StartGame()
+    public void OnMusicChanged(float value)
     {
-        GameManager.Instance.StartGame();
+        AudioManager.Instance.SetMusicVolume(value);
     }
 
-    public void DisplaySettings()
+    public void OnSFXChanged(float value)
     {
-        GameManager.Instance.DisplaySettings();
+        AudioManager.Instance.SetSFXVolume(value);
     }
 
-    public void ExitSettings()
-    {
-        GameManager.Instance.LoadPreviousScene();
-    }
+    public void QuitGame() => GameManager.Instance.QuitGame();
+    public void RestartGame() => GameManager.Instance.RestartGame();
+    public void StartGame() => GameManager.Instance.StartGame();
+    public void DisplaySettings() => GameManager.Instance.DisplaySettings();
+    public void ExitSettings() => GameManager.Instance.LoadPreviousScene();
 }

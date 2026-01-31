@@ -924,7 +924,7 @@ GameObject:
   - component: {fileID: 781860993}
   - component: {fileID: 781860994}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: Music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -996,13 +996,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 1073221769}
   m_HandleRect: {fileID: 145131468}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.0001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.0001
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1612777174}
+        m_TargetAssemblyTypeName: UIButtonActions, Assembly-CSharp
+        m_MethodName: OnMusicChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1138,7 +1150,7 @@ GameObject:
   - component: {fileID: 1348869491}
   - component: {fileID: 1348869492}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: Sounds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1210,13 +1222,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 320430142}
   m_HandleRect: {fileID: 221727240}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.0001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.0001
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1612777174}
+        m_TargetAssemblyTypeName: UIButtonActions, Assembly-CSharp
+        m_MethodName: OnSFXChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1360619915
 GameObject:
   m_ObjectHideFlags: 0
@@ -1613,6 +1637,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dd7370d69b127745bb2bffea7a9fe02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIButtonActions
+  musicSlider: {fileID: 781860994}
+  sfxSlider: {fileID: 1348869492}
 --- !u!4 &1612777175
 Transform:
   m_ObjectHideFlags: 0

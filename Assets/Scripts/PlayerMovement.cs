@@ -29,7 +29,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 moveVelocity = moveInput * moveSpeed;
-        rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
+        Vector3 moveDir = transform.forward * moveInput.z + transform.right * moveInput.x;
+        moveDir.Normalize();
+
+        Vector3 velocity = moveDir * moveSpeed;
+        rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
     }
 }

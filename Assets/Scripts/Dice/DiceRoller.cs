@@ -89,7 +89,7 @@ public class DiceRoller : MonoBehaviour
         }
 
         textMesh.transform.LookAt(Camera.main.transform);
-        textMesh.transform.position = transform.position + Vector3.up;
+        textMesh.transform.position = transform.position + Vector3.up * -0.1f;
         textMesh.transform.Rotate(0, 180, 0);
     }
 }

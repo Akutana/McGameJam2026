@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayableCharacter : MonoBehaviour
 {
     [SerializeField] private CharacterVariables characterVariables;
+    [SerializeField] private StaminaBar staminaBar;
 
     [HideInInspector] public float currentStamina;
 
@@ -16,6 +17,8 @@ public class PlayableCharacter : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         currentStamina = characterVariables.maxStamina;
+
+        staminaBar.SetStamina(currentStamina, characterVariables.maxStamina);
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -40,6 +43,8 @@ public class PlayableCharacter : MonoBehaviour
         {
             currentStamina -= characterVariables.staminaDrainPerSecond * Time.deltaTime;
             currentStamina = Mathf.Clamp(currentStamina, 0f, characterVariables.maxStamina);
+
+            staminaBar.SetStamina(currentStamina, characterVariables.maxStamina);
         }
 
     }
@@ -66,6 +71,7 @@ public class PlayableCharacter : MonoBehaviour
         rb.linearVelocity = Vector3.zero;
 
         currentStamina = characterVariables.maxStamina;
+        staminaBar.SetStamina(currentStamina, characterVariables.maxStamina);
     }
 
     public bool IsOutOfStamina()

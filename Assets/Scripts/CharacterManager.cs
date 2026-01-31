@@ -71,5 +71,6 @@ public class CharacterManager : MonoBehaviour
             currentIndex = 0;
 
         characters[currentIndex].Activate();
+        EnableCharacterCamera(currentIndex);
     }
 }

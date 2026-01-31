@@ -56,7 +56,6 @@ public class PlayableCharacter : MonoBehaviour
     public void Activate()
     {
         isActive = true;
-        characterCamera.gameObject.SetActive(true);
     }
 
     public void Deactivate()
@@ -66,7 +65,6 @@ public class PlayableCharacter : MonoBehaviour
         moveInput = Vector3.zero;
         rb.linearVelocity = Vector3.zero;
 
-        characterCamera.gameObject.SetActive(false);
         currentStamina = characterVariables.maxStamina;
     }
 

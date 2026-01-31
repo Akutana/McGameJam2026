@@ -6,6 +6,7 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
     public AudioMixer mixer;
+    public AudioSource musicSource;
 
     void Awake()
     {
@@ -18,19 +19,9 @@ public class AudioManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        InitDefaultsIfNeeded();
         LoadVolumes();
+        musicSource.Play();
     }
-
-    void InitDefaultsIfNeeded()
-    {
-        if (!PlayerPrefs.HasKey("MusicVolume"))
-            PlayerPrefs.SetFloat("MusicVolume", 1f);
-
-        if (!PlayerPrefs.HasKey("SFXVolume"))
-            PlayerPrefs.SetFloat("SFXVolume", 1f);
-    }
-
 
     private void Update()
     {

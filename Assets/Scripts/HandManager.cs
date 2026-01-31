@@ -51,7 +51,10 @@ public class HandManager : MonoBehaviour
         for(int i = 0; i < handCards.Count; i++)
         {
             float p = firstCardPostion + i * cardSpacing;
-            Vector3 splinePosition = spline.EvaluatePosition(p);
+            Vector3 splinePosition =
+    splineContainer.transform.TransformPoint(
+        spline.EvaluatePosition(p)
+    );
             Vector3 forward = spline.EvaluateTangent(p);
             Vector3 up = spline.EvaluateUpVector(p);
             Quaternion rotation = Quaternion.LookRotation(up, Vector3.Cross(up,forward).normalized);

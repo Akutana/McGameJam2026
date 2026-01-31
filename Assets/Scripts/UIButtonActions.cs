@@ -25,6 +25,7 @@ public class UIButtonActions : MonoBehaviour
 
     public void OnMusicChanged(float value)
     {
+        Debug.Log("hgfjsdagkfhjakgdshfjkgshdafkghsajgfdks");
         AudioManager.Instance.SetMusicVolume(value);
     }
 

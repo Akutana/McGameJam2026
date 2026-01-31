@@ -518,6 +518,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayableCharacter (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4281770262356427239, guid: 8d037fa37d379304aa43108bb75e5584, type: 3}
+      propertyPath: characterVariables
+      value: 
+      objectReference: {fileID: 11400000, guid: 9982ebf3d58560e4b98798d88f850a14, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -700,6 +704,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayableCharacter
       objectReference: {fileID: 0}
+    - target: {fileID: 4281770262356427239, guid: 8d037fa37d379304aa43108bb75e5584, type: 3}
+      propertyPath: characterVariables
+      value: 
+      objectReference: {fileID: 11400000, guid: 5bd4876b744b6aa48b649d45395443c1, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

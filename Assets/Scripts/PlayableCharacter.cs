@@ -2,10 +2,7 @@ using UnityEngine;
 
 public class PlayableCharacter : MonoBehaviour
 {
-
-    public float moveSpeed = 6f;
-    public float maxStamina = 100f;
-    public float staminaDrainPerSecond = 10f;
+    [SerializeField] private CharacterVariables characterVariables;
 
     [HideInInspector] public float currentStamina;
 
@@ -18,7 +15,7 @@ public class PlayableCharacter : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        currentStamina = maxStamina;
+        currentStamina = characterVariables.maxStamina;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -33,7 +30,6 @@ public class PlayableCharacter : MonoBehaviour
         {
             return;
         }
-
     
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
@@ -42,8 +38,8 @@ public class PlayableCharacter : MonoBehaviour
 
         if(moveInput != Vector3.zero)
         {
-            currentStamina -= staminaDrainPerSecond * Time.deltaTime;
-            currentStamina = Mathf.Clamp(currentStamina, 0f, maxStamina);
+            currentStamina -= characterVariables.staminaDrainPerSecond * Time.deltaTime;
+            currentStamina = Mathf.Clamp(currentStamina, 0f, characterVariables.maxStamina);
         }
 
     }
@@ -53,7 +49,7 @@ public class PlayableCharacter : MonoBehaviour
         Vector3 moveDir = transform.forward * moveInput.z + transform.right * moveInput.x;
         moveDir.Normalize();
 
-        Vector3 velocity = moveDir * moveSpeed;
+        Vector3 velocity = moveDir * characterVariables.moveSpeed;
         rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
     }
 
@@ -67,12 +63,11 @@ public class PlayableCharacter : MonoBehaviour
     {
         isActive = false;
 
-        // STOP movement completely
         moveInput = Vector3.zero;
         rb.linearVelocity = Vector3.zero;
 
         characterCamera.gameObject.SetActive(false);
-        currentStamina = maxStamina;
+        currentStamina = characterVariables.maxStamina;
     }
 
     public bool IsOutOfStamina()

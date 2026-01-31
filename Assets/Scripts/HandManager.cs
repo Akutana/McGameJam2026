@@ -11,6 +11,7 @@ public class HandManager : MonoBehaviour
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private SplineContainer splineContainer;
     [SerializeField] private Transform spawnPoint;
+    [SerializeField] private int drawNumber;
 
     private List<GameObject> handCards = new();
 
@@ -62,6 +63,25 @@ public class HandManager : MonoBehaviour
             handCards[i].transform.DORotateQuaternion(rotation, 0.25f);
         }
 
+    }
+
+    private void OnEnable()
+    {
+        GameManager.OnPlayerTurnStarted += HandlePlayerTurnStarted;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnPlayerTurnStarted -= HandlePlayerTurnStarted;
+    }
+
+    private void HandlePlayerTurnStarted()
+    {
+        for(int i = 0; i < drawNumber; i++)
+        {
+            DrawCard();
+        }
+            
     }
 
 

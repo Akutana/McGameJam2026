@@ -333,10 +333,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandManager
   maxHandSize: 5
-  cardPrefab: {fileID: 282516061887738462, guid: 0e76c06c6213e814abb715503963f32e, type: 3}
-  splineContainer: {fileID: 715291366}
-  spawnPoint: {fileID: 751955855}
   drawNumber: 3
+  spawnPoint: {fileID: 751955855}
+  splineContainer: {fileID: 715291366}
+  cardPrefab: {fileID: 282516061887738462, guid: 0e76c06c6213e814abb715503963f32e, type: 3}
+  availableCards:
+  - {fileID: 11400000, guid: b1c85dfab9d1d654ea032a78882ba6c1, type: 2}
+  - {fileID: 11400000, guid: e49abe4b887f20c40a9461cbe5d8c851, type: 2}
+  - {fileID: 11400000, guid: 4388e64ca53cb474a958757bd781da83, type: 2}
 --- !u!4 &683440752
 Transform:
   m_ObjectHideFlags: 0

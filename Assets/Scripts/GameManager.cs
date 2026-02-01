@@ -55,20 +55,16 @@ public class GameManager : MonoBehaviour
         OnTurnChanged?.Invoke(CurrentTurn);
     }
 
-    public void OnEndTurnButtonPressed()
-    {
-        if (CurrentTurn != TurnState.PlayerTurn) return;
+   public void OnEndTurnButtonPressed()
+{
+    if (CurrentTurn != TurnState.PlayerTurn) return;
 
-        // Clear the player's hand
-        HandManager handManager = FindObjectOfType<HandManager>();
-        if (handManager != null)
-        {
-            handManager.ClearHand();
-        }
+    // Clear the hand using the singleton
+    HandManager.Instance?.ClearHand();
 
-        Debug.Log("Player pressed End Turn");
-        StartEnemyTurn(); // switch to enemy turn
-    }
+    Debug.Log("Player pressed End Turn");
+    StartEnemyTurn();
+}
 
     public void StartEnemyTurn()
     {

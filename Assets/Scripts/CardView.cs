@@ -1,26 +1,30 @@
 using UnityEngine;
 using DG.Tweening;
+using System.Collections;
 using TMPro;
 
 public class CardView : MonoBehaviour
 {
     [SerializeField] private CardData cardData;
-     private HandManager handManager;
+    private HandManager handManager;
     private Vector3 originalScale;
     private bool isHovered;
     private TextMeshPro cardNameText;
     private TextMeshPro cardDescText;
 
-    public GameObject cardDescPos;
+    public bool canInteract = false;
 
     private void Awake()
     {
         originalScale = transform.localScale;
+        DisableInteractionTemporarily(2f); 
     }
 
     private void OnMouseEnter()
     {
-        isHovered = true;
+        if (!canInteract) return;
+
+        transform.DOKill();
         transform.DOScale(originalScale * 1.15f, 0.15f);
         TooltipUI.Instance.Show(cardData.description);
         cardNameText = gameObject.transform.GetChild(0).transform.GetComponent<TextMeshPro>();
@@ -35,7 +39,9 @@ public class CardView : MonoBehaviour
 
     private void OnMouseExit()
     {
-        isHovered = false;
+        if (!canInteract) return;
+
+        transform.DOKill();
         transform.DOScale(originalScale, 0.15f);
         TooltipUI.Instance.Hide();
         cardNameText.text = "";
@@ -44,10 +50,17 @@ public class CardView : MonoBehaviour
 
     private void OnMouseDown()
     {
-        cardData.Play();
-        TooltipUI.Instance.Hide();
-        handManager.RemoveCard(gameObject);
-        Destroy(gameObject);
+        if (!canInteract) return;
+
+        canInteract = false; 
+
+        transform.DOKill();
+        TooltipUI.Instance?.Hide();
+
+        cardData?.Play();
+
+        handManager?.OnCardPlayed();
+        handManager?.RemoveCard(gameObject);
     }
 
     public void SetData(CardData data)
@@ -58,5 +71,17 @@ public class CardView : MonoBehaviour
     public void SetHandManager(HandManager manager)
     {
         handManager = manager;
+    }
+
+    public void DisableInteractionTemporarily(float duration)
+    {
+        StartCoroutine(InteractionCooldown(duration));
+    }
+
+    private IEnumerator InteractionCooldown(float duration)
+    {
+        canInteract = false;
+        yield return new WaitForSeconds(duration);
+        canInteract = true;
     }
 }

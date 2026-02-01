@@ -82,18 +82,44 @@ public class GameManager : MonoBehaviour
 
     public void OnEndTurnButtonPressed()
     {
-        if (DiceManager.Instance.AreAnyDiceRolling())
+        Debug.Log($"=== End Turn Button Pressed === Current State: {CurrentTurn}");
+
+        // Handle shopping turn FIRST, before any other checks
+        if (CurrentTurn == TurnState.ShoppingTurn)
         {
+            Debug.Log("In shopping turn, ending shop now");
+            EndShoppingTurn();
             return;
         }
-        Debug.Log("End Turn Button Pressed");
-        if (CurrentTurn != TurnState.PlayerTurn) return;
+
+        // Check dice rolling only for combat turns
+        if (DiceManager.Instance == null)
+        {
+            Debug.LogError("DiceManager is null!");
+            return;
+        }
+
+        if (DiceManager.Instance.AreAnyDiceRolling())
+        {
+            Debug.Log("Dice still rolling, cannot end turn");
+            return;
+        }
+
+        Debug.Log("Passed dice check");
+
+        if (CurrentTurn != TurnState.PlayerTurn)
+        {
+            Debug.LogWarning($"Not player turn (current: {CurrentTurn}), ignoring");
+            return;
+        }
+
+        Debug.Log("Processing combat turn end");
 
         // Clear the hand using the singleton
         HandManager.Instance?.ClearHand();
 
-        // Only deal damage if we're NOT in shopping turn and enemy exists
-        if (CurrentTurn != TurnState.ShoppingTurn && CreepySpotlightFlicker.Instance != null && CreepySpotlightFlicker.Instance.currentEnemy != null)
+        // Only deal damage if enemy exists
+        if (CreepySpotlightFlicker.Instance != null && CreepySpotlightFlicker.Instance.currentEnemy != null)
         {
             int damage = DiceManager.Instance.GetTotalDiceValue();
             CreepySpotlightFlicker.Instance.currentEnemy.health -= damage;
@@ -107,11 +133,30 @@ public class GameManager : MonoBehaviour
                 CreepySpotlightFlicker.Instance.OnEnemyDied();
                 Currency += 5;
                 StartShoppingTurn();
-                return; // Don't continue to normal enemy turn
+                return;
             }
         }
 
         StartEnemyTurn();
+    }
+
+    public void EndShoppingTurn()
+    {
+        Debug.Log("=== EndShoppingTurn called ===");
+        OnShopTransitionFinised?.Invoke();
+
+        // Spawn a new enemy when leaving the shop
+        if (CreepySpotlightFlicker.Instance != null)
+        {
+            Debug.Log("Spawning new enemy after shop");
+            CreepySpotlightFlicker.Instance.IntroduceEnemy();
+        }
+        else
+        {
+            Debug.LogError("CreepySpotlightFlicker.Instance is null!");
+        }
+
+        StartPlayerTurn();
     }
 
     public void StartShoppingTurn()

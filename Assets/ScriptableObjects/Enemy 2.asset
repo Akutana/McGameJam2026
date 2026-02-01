@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemies
   cardName: the squid2
   damage: 3
-  health: 20
+  health: 1
   art: {fileID: 21300000, guid: e6b3cf1f5d9d34840a432b4f5f743612, type: 3}

@@ -202,6 +202,8 @@ public class CreepySpotlightFlicker : MonoBehaviour
             currentEnemy.maxHealth = Mathf.RoundToInt(currentEnemy.maxHealth * healthMultiplier);
             currentEnemy.damage = Mathf.RoundToInt(currentEnemy.damage * damageMultiplier);
 
+            //currentEnemy.
+
             Debug.Log($"Spawned enemy with {currentEnemy.maxHealth} health ({healthMultiplier:F2}x) and {currentEnemy.damage} damage ({damageMultiplier:F2}x)");
         }
 

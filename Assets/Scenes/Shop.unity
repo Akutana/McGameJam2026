@@ -488,7 +488,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b1c85dfab9d1d654ea032a78882ba6c1, type: 2}
   - {fileID: 11400000, guid: e49abe4b887f20c40a9461cbe5d8c851, type: 2}
   - {fileID: 11400000, guid: 4388e64ca53cb474a958757bd781da83, type: 2}
-  - {fileID: 11400000, guid: 0afcf79439bdf924e95593ff44b23b59, type: 2}
   - {fileID: 11400000, guid: c471da6e03c2aad4e90d2bda3bcda44d, type: 2}
   currentItems: []
   shopItems:

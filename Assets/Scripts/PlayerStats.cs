@@ -63,6 +63,8 @@ public class PlayerStats : MonoBehaviour
             Debug.Log("Player died! Starting fade...");
             StartCoroutine(HandleDeath());
         }
+
+        Debug.Log(health.GetCurrentHealth());
     }
 
     private IEnumerator HandleDeath()

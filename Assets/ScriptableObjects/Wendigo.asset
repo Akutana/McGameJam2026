@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Wendigo
   m_EditorClassIdentifier: Assembly-CSharp::Enemies
   enemyName: Wendigo
-  damage: 3
+  damage: 50
   maxHealth: 10
   art: {fileID: 21300000, guid: b77fb6e8d18db4e459a9e59098a12d46, type: 3}

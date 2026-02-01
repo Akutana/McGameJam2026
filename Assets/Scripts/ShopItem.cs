@@ -9,8 +9,12 @@ public class ShopItem : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textMesh;
     [SerializeField] private GameObject test;
 
+    private TextMeshProUGUI nameAndDescMesh;
+
     private CardData cardData;
     private int price;
+    private string name;
+    private string description;
     private bool hasBeenBought;
 
     private void Awake()
@@ -22,6 +26,8 @@ public class ShopItem : MonoBehaviour
     {
         cardData = card;
         price = card.price;
+        name = card.cardName;
+        description = card.description;
 
         image.sprite = card.art;
         image.enabled = true;
@@ -30,11 +36,19 @@ public class ShopItem : MonoBehaviour
         textMesh.enabled = false;
     }
 
+    public void SetNameAndDescription(TextMeshProUGUI textMesh)
+    {
+        nameAndDescMesh = textMesh;
+        
+    }
+
     public void OnMouseOver()
     {
         if (hasBeenBought) { return;  }
         textMesh.text = price.ToString();
         textMesh.enabled = true;
+        nameAndDescMesh.text = name + "\n" + description;
+        nameAndDescMesh.enabled = true;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -52,5 +66,6 @@ public class ShopItem : MonoBehaviour
     private void OnMouseExit()
     {
         textMesh.enabled = false;
+        nameAndDescMesh.enabled = false;
     }
 }

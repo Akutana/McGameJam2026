@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ShopManager : MonoBehaviour
 {
     [SerializeField] private int shopSlotCount = 3;
+    [SerializeField] private TextMeshProUGUI nameAndDescription;
     public List<CardData> inventory;
     public List<CardData> currentItems;
     public List<ShopItem> shopItems;
@@ -60,6 +62,7 @@ public class ShopManager : MonoBehaviour
             {
                 shopItems[i].gameObject.SetActive(true);
                 shopItems[i].Setup(currentItems[i]);
+                shopItems[i].SetNameAndDescription(nameAndDescription);
             }
             else
             {

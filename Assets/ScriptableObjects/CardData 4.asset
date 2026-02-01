@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ac4740dcac360648b7d42e708946311, type: 3}
-  m_Name: CardData 1
+  m_Name: CardData 4
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  cardName: Pissy pants
-  description: my bad gang
-  art: {fileID: 0}
-  price: 2
+  cardName: The joker
+  description: i am the jokey
+  art: {fileID: 21300000, guid: 4131896ca958ccc4fa048f4896c7b776, type: 3}
+  price: 1

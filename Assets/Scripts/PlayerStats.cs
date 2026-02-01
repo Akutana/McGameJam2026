@@ -56,8 +56,6 @@ public class PlayerStats : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("player health: " + health.GetCurrentHealth());
-
         // Check if player died
         if (health.GetCurrentHealth() <= 0 && !isDead)
         {
@@ -101,9 +99,12 @@ public class PlayerStats : MonoBehaviour
 
         Debug.Log("Fade complete, loading end menu");
 
-        fadeImage.gameObject.SetActive(false); // Deactivate fade image
+        GameManager.Instance.SetGameResult(GameManager.GameResult.Lose);
 
         // Load end menu
         SceneManager.LoadScene(endMenuSceneName);
+
+        //color.a = 0f;
+        //fadeImage.color = color;
     }
 }

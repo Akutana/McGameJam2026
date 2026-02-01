@@ -25,7 +25,20 @@ public class GameManager : MonoBehaviour
         ShoppingTurn
     }
 
+    public enum GameResult
+    {
+        None,
+        Win,
+        Lose
+    }
+
+    public GameResult FinalResult { get; private set; } = GameResult.None;
     public TurnState CurrentTurn { get; private set; } = TurnState.None;
+
+    public void SetGameResult(GameResult result)
+    {
+        FinalResult = result;
+    }
 
     [Header("Difficulty Scaling")]
     [SerializeField] private float healthIncreasePerKill = 2f; // +2 health per enemy killed
@@ -60,7 +73,6 @@ public class GameManager : MonoBehaviour
 
     public void ResetGame()
     {
-        Debug.Log("Resetting game");
         TotalEnemiesDefeated = 0;
         Currency = 0;
     }
@@ -75,7 +87,6 @@ public class GameManager : MonoBehaviour
     {
         NumberofRerolls = 3;
         CurrentTurn = TurnState.PlayerTurn;
-        Debug.Log("Player Turn");
 
         OnPlayerTurnStarted?.Invoke();
         OnTurnChanged?.Invoke(CurrentTurn);
@@ -83,7 +94,6 @@ public class GameManager : MonoBehaviour
 
     public void OnEndTurnButtonPressed()
     {
-        Debug.Log($"=== End Turn Button Pressed === Current State: {CurrentTurn}");
 
         // Handle shopping turn FIRST, before any other checks
         if (CurrentTurn == TurnState.ShoppingTurn)
@@ -106,15 +116,12 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("Passed dice check");
-
         if (CurrentTurn != TurnState.PlayerTurn)
         {
             Debug.LogWarning($"Not player turn (current: {CurrentTurn}), ignoring");
             return;
         }
 
-        Debug.Log("Processing combat turn end");
 
         // Clear the hand using the singleton
         HandManager.Instance?.ClearHand();
@@ -132,7 +139,13 @@ public class GameManager : MonoBehaviour
             if (CreepySpotlightFlicker.Instance.currentEnemy.maxHealth <= 0)
             {
                 TotalEnemiesDefeated++;
-                Debug.Log($"Enemy defeated! Total: {TotalEnemiesDefeated} | Next enemy health multiplier: {GetHealthMultiplier():F2}x | damage multiplier: {GetDamageMultiplier():F2}x");
+
+                if (TotalEnemiesDefeated >= 5)
+                {
+                    FinalResult = GameResult.Win;
+                    SceneManager.LoadScene("EndMenu");
+                    return;
+                }
 
                 // Trigger death animation
                 CreepySpotlightFlicker.Instance.OnEnemyDied();
@@ -197,7 +210,7 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         ResetGame();
-        SceneManager.LoadScene("Xavier2");
+        SceneManager.LoadScene("StartingMenu");
     }
 
     public void DisplaySettings()
@@ -211,7 +224,7 @@ public class GameManager : MonoBehaviour
         // Safety fallback
         if (string.IsNullOrEmpty(previousScene))
         {
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("StartingMenu");
             return;
         }
 

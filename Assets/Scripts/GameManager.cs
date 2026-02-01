@@ -1,6 +1,8 @@
 using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.Splines.Interpolators;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,9 +11,10 @@ public class GameManager : MonoBehaviour
     private string previousScene;
     public static event Action OnPlayerTurnStarted;
     public static event System.Action<GameManager.TurnState> OnTurnChanged;
-
-    public int TotalEnemiesDefeated { get; set; } = 0;
+    public static event Action OnShopTurnStarted;
+ 	public int TotalEnemiesDefeated { get; set; } = 0;
     public int NumberofRerolls { get; set; } = 3;
+    
     public enum TurnState
     {
         None,
@@ -86,6 +89,10 @@ public class GameManager : MonoBehaviour
 
     public void EndEnemyTurn()
     {
+        if (true)
+        {
+            MoveToShop();
+        }
         StartPlayerTurn();
     }
 
@@ -121,5 +128,10 @@ public class GameManager : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+
+    private void MoveToShop()
+    {
+        OnShopTurnStarted?.Invoke();
     }
 }

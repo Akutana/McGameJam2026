@@ -304,6 +304,8 @@ public class CreepySpotlightFlicker : MonoBehaviour
     {
         if (currentEnemyVisual != null)
         {
+
+            SoundPlayer.Instance?.PlayEnemyAttackSound();
             StartCoroutine(JiggleSprite());
         }
     }
@@ -318,6 +320,7 @@ public class CreepySpotlightFlicker : MonoBehaviour
         float jiggleIntensity = 0.2f;
         float jiggleSpeed = 30f;
         float elapsed = 0f;
+
 
         while (elapsed < jiggleDuration)
         {

@@ -8,6 +8,9 @@ public class DiceRoller : MonoBehaviour
     [SerializeField] private float maxRandomForceValue;
     [SerializeField] private float rollingForce;
     [SerializeField] private DiceSide[] diceSides;
+    [SerializeField] private float minVelocityForSound = 0.5f; // Minimum impact velocity to play sound
+    [SerializeField] private float soundCooldown = 0.1f; // Prevent sound spam
+    private float lastSoundTime = 0f;
     private Rigidbody rb;
     private TextMeshPro textMesh;
     public bool isDiceActive = true;
@@ -46,6 +49,22 @@ public class DiceRoller : MonoBehaviour
         }
 
         TextLogic();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        // Check if dice is rolling and hit with enough force
+        if (isRolling && Time.time - lastSoundTime > soundCooldown)
+        {
+            float impactVelocity = collision.relativeVelocity.magnitude;
+
+            if (impactVelocity > minVelocityForSound)
+            {
+                // Play dice sound
+                SoundPlayer.Instance?.PlayDicerollSound();
+                lastSoundTime = Time.time;
+            }
+        }
     }
 
     private void OnMouseOver()

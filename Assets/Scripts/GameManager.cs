@@ -189,10 +189,7 @@ public class GameManager : MonoBehaviour
 
         OnTurnChanged?.Invoke(CurrentTurn);
 
-        if (CreepySpotlightFlicker.Instance != null)
-        {
-            CreepySpotlightFlicker.Instance.currentEnemy.maxHealth -= 10;
-        }
+        PlayerStats.Instance.health.DealDamage(CreepySpotlightFlicker.Instance.currentEnemy.damage);
 
         Invoke(nameof(EndEnemyTurn), 1f);
     }

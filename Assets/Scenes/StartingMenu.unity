@@ -1586,7 +1586,7 @@ MonoBehaviour:
   attackEnemy: {fileID: 8300000, guid: 6894569b20dac1240a9f5fd379260b74, type: 3}
   enemyAttack: {fileID: 8300000, guid: 1fe377b622f759246bdf80c4f976084f, type: 3}
   cardSound: {fileID: 8300000, guid: baca5995f4f30d44f8074172fc90d44d, type: 3}
-  diceRoll: {fileID: 8300000, guid: c5feeb70caf668441b61abd9794a9202, type: 3}
+  diceRoll: {fileID: 8300000, guid: 6519d18275ebd084ca90bdf526ae5c83, type: 3}
   shopBuySound: {fileID: 8300000, guid: d12f5ceb1e0b84b41a02b25f14625c61, type: 3}
 --- !u!82 &1505509938
 AudioSource:
@@ -2032,6 +2032,7 @@ MonoBehaviour:
   healthIncreasePerKill: 2
   damageIncreasePerKill: 1
   delayBeforePlayerTurn: 1.5
+  deathAnimationDelay: 1.5
 --- !u!4 &1815582887
 Transform:
   m_ObjectHideFlags: 0

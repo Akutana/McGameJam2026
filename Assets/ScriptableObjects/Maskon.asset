@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemies
   enemyName: Maskon
   damage: 3
-  maxHealth: 1
+  maxHealth: 10
   art: {fileID: 21300000, guid: fcc2c5af36f13a04999419bc20877f8f, type: 3}

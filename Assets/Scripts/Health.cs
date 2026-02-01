@@ -2,12 +2,17 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private float maxHealth = 100f;
-
+    private float maxHealth;
     private float health;
 
-    private void Start()
+    public float GetCurrentHealth()
     {
+        return health;
+    }
+
+    public void Init(float max)
+    {
+        maxHealth = max;
         health = maxHealth;
     }
 
@@ -16,7 +21,12 @@ public class Health : MonoBehaviour
         if (health == 0) { return; }
 
         health = Mathf.Max(0, health - damage);
+    }
 
-        Debug.Log(health);
+    public void Heal(float healAmount)
+    {
+        if (health == maxHealth) { return; }
+
+        health = Mathf.Min(maxHealth, health + healAmount);
     }
 }

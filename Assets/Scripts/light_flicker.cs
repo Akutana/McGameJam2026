@@ -6,8 +6,8 @@ public class CreepySpotlightFlicker : MonoBehaviour
 {
     [Header("References")]
     public Light spotLight;
-    [SerializeField] private List<Enemies> enemies;
-    [SerializeField] public Enemies currentEnemy;
+    [SerializeField] private List<EnemyData> enemies;
+    [SerializeField] public EnemyData currentEnemy;
     [SerializeField] private Transform planePos;
     [SerializeField] private GameObject enemyVisualPrefab;
 
@@ -132,7 +132,7 @@ public class CreepySpotlightFlicker : MonoBehaviour
 
     private void SpawnEnemyVisual()
     {
-        Enemies enemyTemplate = enemies[Random.Range(0, enemies.Count)];
+        EnemyData enemyTemplate = enemies[Random.Range(0, enemies.Count)];
 
         // Create a runtime copy using Instantiate
         currentEnemy = Instantiate(enemyTemplate);
@@ -143,10 +143,10 @@ public class CreepySpotlightFlicker : MonoBehaviour
             float healthMultiplier = GameManager.Instance.GetHealthMultiplier();
             float damageMultiplier = GameManager.Instance.GetDamageMultiplier();
 
-            currentEnemy.health = Mathf.RoundToInt(currentEnemy.health * healthMultiplier);
+            currentEnemy.maxHealth = Mathf.RoundToInt(currentEnemy.maxHealth * healthMultiplier);
             currentEnemy.damage = Mathf.RoundToInt(currentEnemy.damage * damageMultiplier);
 
-            Debug.Log($"Spawned enemy with {currentEnemy.health} health ({healthMultiplier:F2}x) and {currentEnemy.damage} damage ({damageMultiplier:F2}x)");
+            Debug.Log($"Spawned enemy with {currentEnemy.maxHealth} health ({healthMultiplier:F2}x) and {currentEnemy.damage} damage ({damageMultiplier:F2}x)");
         }
 
         currentEnemyVisual = Instantiate(

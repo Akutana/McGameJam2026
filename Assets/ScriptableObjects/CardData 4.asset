@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ac4740dcac360648b7d42e708946311, type: 3}
   m_Name: CardData 4
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  cardName: The joker
-  description: i am the jokey
-  art: {fileID: 21300000, guid: 4131896ca958ccc4fa048f4896c7b776, type: 3}
+  cardName: Sharp hit
+  description: Deals direct damage to the opponent
+  art: {fileID: -1863314312, guid: 1a0855e7ddc5c874cbfc666bc65f6ab9, type: 3}
   price: 1
+  type: 1
+  value: 0

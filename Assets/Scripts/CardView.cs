@@ -2,13 +2,14 @@ using UnityEngine;
 using DG.Tweening;
 using System.Collections;
 using TMPro;
+using UnityEditor;
+using Unity.VisualScripting;
 
 public class CardView : MonoBehaviour
 {
     [SerializeField] private CardData cardData;
     private HandManager handManager;
     private Vector3 originalScale;
-    private bool isHovered;
     private TextMeshPro cardNameText;
     private TextMeshPro cardDescText;
 
@@ -22,6 +23,8 @@ public class CardView : MonoBehaviour
         cardDescText = transform.GetChild(1).GetComponent<TextMeshPro>();
 
         DisableInteractionTemporarily(2f);
+
+        gameObject.GetComponent<SpriteRenderer>().sprite = cardData.art;
     }
 
     private void OnMouseEnter()
@@ -78,7 +81,7 @@ public class CardView : MonoBehaviour
 
         else
         {
-            handManager?.OnCardPlayed();
+            handManager?.PlayCard(ConvertToCardClass());
             handManager?.RemoveCard(gameObject);
         }
     }
@@ -105,7 +108,7 @@ public class CardView : MonoBehaviour
 
         yield return new WaitForSeconds(duration);
 
-        handManager?.OnCardPlayed();
+        handManager?.PlayCard(ConvertToCardClass());
         handManager?.RemoveCard(gameObject);
     }
 
@@ -139,5 +142,10 @@ public class CardView : MonoBehaviour
         canInteract = false;
         yield return new WaitForSeconds(duration);
         canInteract = true;
+    }
+
+    private Card ConvertToCardClass()
+    {
+        return new Card(gameObject, cardData.type, cardData.value);
     }
 }

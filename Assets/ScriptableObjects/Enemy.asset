@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e74a1fd28eee7bf488d2a6dadce3d9da, type: 3}
   m_Name: Enemy
   m_EditorClassIdentifier: Assembly-CSharp::Enemies
-  cardName: The squid
+  enemyName: 
   damage: 3
-  health: 1
-  art: {fileID: 21300000, guid: 89d2ee46fc405654ba8c2b2ab5ee5a7e, type: 3}
+  maxHealth: 0
+  art: {fileID: -535253038, guid: 2844cfe8e2c3448409bf49fd53f0a759, type: 3}

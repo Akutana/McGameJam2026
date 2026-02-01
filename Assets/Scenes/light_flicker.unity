@@ -158,6 +158,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e49abe4b887f20c40a9461cbe5d8c851, type: 2}
   - {fileID: 11400000, guid: 4388e64ca53cb474a958757bd781da83, type: 2}
   lightFlicker: {fileID: 1031542601}
+  player: {fileID: 1092105442}
+  currentEnemy: {fileID: 1465879245}
 --- !u!4 &83756651
 Transform:
   m_ObjectHideFlags: 0
@@ -1296,6 +1298,65 @@ MonoBehaviour:
   moveDuration: 2
   minSpriteAlpha: 0.2
   maxSpriteAlpha: 1
+--- !u!1 &1092105442
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1092105443}
+  - component: {fileID: 1092105445}
+  - component: {fileID: 1092105444}
+  m_Layer: 0
+  m_Name: Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1092105443
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1092105442}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.09513, y: 0.10172, z: -1.97488}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1092105444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1092105442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 450c76b5cca98e94cbd061811915e61f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
+  maxHealth: 10
+  health: {fileID: 1092105445}
+--- !u!114 &1092105445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1092105442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36af2f0a605b7a1478337d6c33f0bc3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
 --- !u!1 &1179472971
 GameObject:
   m_ObjectHideFlags: 0
@@ -2353,3 +2414,4 @@ SceneRoots:
   - {fileID: 1465879244}
   - {fileID: 176262843}
   - {fileID: 868996842}
+  - {fileID: 1092105443}

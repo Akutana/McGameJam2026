@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e74a1fd28eee7bf488d2a6dadce3d9da, type: 3}
   m_Name: Enemy 3
   m_EditorClassIdentifier: Assembly-CSharp::Enemies
-  cardName: the crab
+  enemyName: 
   damage: 1
-  health: 1
-  art: {fileID: 21300000, guid: 4131896ca958ccc4fa048f4896c7b776, type: 3}
+  maxHealth: 0
+  art: {fileID: -535253038, guid: 2844cfe8e2c3448409bf49fd53f0a759, type: 3}

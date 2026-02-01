@@ -122,11 +122,11 @@ public class GameManager : MonoBehaviour
         if (CreepySpotlightFlicker.Instance != null && CreepySpotlightFlicker.Instance.currentEnemy != null)
         {
             int damage = DiceManager.Instance.GetTotalDiceValue();
-            CreepySpotlightFlicker.Instance.currentEnemy.health -= damage;
+            CreepySpotlightFlicker.Instance.currentEnemy.maxHealth -= damage;
             Debug.Log("Dealt " + damage + " damage to enemy.");
 
             // Check if enemy died
-            if (CreepySpotlightFlicker.Instance.currentEnemy.health <= 0)
+            if (CreepySpotlightFlicker.Instance.currentEnemy.maxHealth <= 0)
             {
                 TotalEnemiesDefeated++;
                 Debug.Log($"Enemy defeated! Total: {TotalEnemiesDefeated} | Next enemy health multiplier: {GetHealthMultiplier():F2}x | damage multiplier: {GetDamageMultiplier():F2}x");
@@ -182,6 +182,11 @@ public class GameManager : MonoBehaviour
 
         OnTurnChanged?.Invoke(CurrentTurn);
 
+        if(CreepySpotlightFlicker.Instance != null)
+        {
+            CreepySpotlightFlicker.Instance.currentEnemy.maxHealth -= 10;
+        }
+
         Invoke(nameof(EndEnemyTurn), 1f);
     }
 
@@ -196,6 +201,7 @@ public class GameManager : MonoBehaviour
         previousScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene("Settings");
     }
+   
 
     public void LoadPreviousScene()
     {

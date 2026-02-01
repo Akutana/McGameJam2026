@@ -44,8 +44,12 @@ public class CardView : MonoBehaviour
         transform.DOKill();
         transform.DOScale(originalScale, 0.15f);
         TooltipUI.Instance.Hide();
-        cardNameText.text = "";
-        cardDescText.text = "";
+
+        if (cardNameText && cardDescText)
+        {
+            cardNameText.text = "";
+            cardDescText.text = "";
+        }
     }
 
     private void OnMouseDown()
@@ -59,8 +63,55 @@ public class CardView : MonoBehaviour
 
         cardData?.Play();
 
+        ParticleSystem ps = gameObject.GetComponent<ParticleSystem>();
+        if (ps != null)
+        {
+            ps.transform.rotation = Quaternion.identity;
+            ps.Play();
+            StartCoroutine(FadeThenRemove(ps));
+        }
+
+        else
+        {
+            handManager?.OnCardPlayed();
+            handManager?.RemoveCard(gameObject);
+        }
+    }
+
+    private IEnumerator FadeAndStopParticles(ParticleSystem ps, float duration)
+    {
+        var emission = ps.emission;
+        float startRate = emission.rateOverTime.constant;
+
+        DOTween.To(() => startRate, x => {
+            var rate = emission.rateOverTime;
+            rate = new ParticleSystem.MinMaxCurve(x);
+            emission.rateOverTime = rate;
+        }, 0f, duration);
+
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        TextMeshPro[] texts = GetComponentsInChildren<TextMeshPro>();
+
+        if (sr != null)
+            sr.DOFade(0f, duration);
+
+        foreach (var text in texts)
+            text.DOFade(0f, duration);
+
+        yield return new WaitForSeconds(duration);
+
         handManager?.OnCardPlayed();
         handManager?.RemoveCard(gameObject);
+    }
+
+    private IEnumerator FadeThenRemove(ParticleSystem ps)
+    {
+        ps.transform.rotation = Quaternion.identity;
+        ps.Play();
+
+        StartCoroutine(FadeAndStopParticles(ps, 1)); // 1s de fade
+
+        yield return new WaitForSeconds(ps.main.duration);
     }
 
     public void SetData(CardData data)

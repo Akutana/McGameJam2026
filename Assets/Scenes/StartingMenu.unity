@@ -1085,7 +1085,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Dungeons and Vampires
+  m_text: Mansion y poni
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ac9fed6b16310d4408c6aed2bacbfce9, type: 2}
   m_sharedMaterial: {fileID: -1625801346691068981, guid: ac9fed6b16310d4408c6aed2bacbfce9, type: 2}

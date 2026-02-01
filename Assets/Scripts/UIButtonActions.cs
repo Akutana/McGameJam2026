@@ -5,6 +5,16 @@ public class UIButtonActions : MonoBehaviour
 {
     public Slider musicSlider;
     public Slider sfxSlider;
+    void Awake()
+    {
+        if (!PlayerPrefs.HasKey("MusicVolume"))
+            PlayerPrefs.SetFloat("MusicVolume", 1f);
+
+        if (!PlayerPrefs.HasKey("SFXVolume"))
+            PlayerPrefs.SetFloat("SFXVolume", 1f);
+
+        PlayerPrefs.Save();
+    }
 
     void Start()
     {
@@ -13,6 +23,7 @@ public class UIButtonActions : MonoBehaviour
             musicSlider.SetValueWithoutNotify(
                 PlayerPrefs.GetFloat("MusicVolume", 1f)
             );
+            PlayerPrefs.SetFloat("MusicVolume", 1f);
         }
 
         if (sfxSlider != null)
@@ -20,7 +31,9 @@ public class UIButtonActions : MonoBehaviour
             sfxSlider.SetValueWithoutNotify(
                 PlayerPrefs.GetFloat("SFXVolume", 1f)
             );
+            PlayerPrefs.SetFloat("SFXVolume", 1f);
         }
+
     }
 
     public void OnMusicChanged(float value)

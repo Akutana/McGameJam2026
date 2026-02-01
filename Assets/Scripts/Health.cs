@@ -29,4 +29,19 @@ public class Health : MonoBehaviour
 
         health = Mathf.Min(maxHealth, health + healAmount);
     }
+
+    public float GetHealthNormalized()
+    {
+        return health / maxHealth;
+    }
+    void Awake()
+    {
+        Debug.Log($"{name} Health Awake ID: {GetInstanceID()}");
+    }
+
+    private void Update()
+    {
+        Debug.Log("enemy" + health);
+    }
+
 }

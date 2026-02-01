@@ -40,6 +40,7 @@ public class ShopItem : MonoBehaviour
                 image.enabled = false;
                 HandManager.Instance.AddCardToDeck(cardData);
                 GameManager.Instance.Currency -= price;
+                GameManager.Instance.UpdateCurrencyDisplay();
             }
         }
     }

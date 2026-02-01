@@ -3,6 +3,8 @@ using System;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Splines.Interpolators;
+using TMPro;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,6 +20,9 @@ public class GameManager : MonoBehaviour
     public int Currency { get; set; } = 0;
 
     public int additionalDamage;
+
+    public TextMeshProUGUI currencyDisplay;
+    public Image currencyIcon;
 
     public enum TurnState
     {
@@ -57,6 +62,8 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        currencyDisplay.text = Currency.ToString();
     }
 
     public void ResetGame()
@@ -64,12 +71,24 @@ public class GameManager : MonoBehaviour
         Debug.Log("Resetting game");
         TotalEnemiesDefeated = 0;
         Currency = 0;
+        currencyDisplay.text = Currency.ToString();
     }
 
     public void StartGame()
     {
+        SceneManager.sceneLoaded += OnGameSceneLoaded;
         SceneManager.LoadScene("light_flicker");
         StartPlayerTurn();
+    }
+
+    private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "light_flicker")
+        {
+            SceneManager.sceneLoaded -= OnGameSceneLoaded;
+            ShowCurrency();
+            StartPlayerTurn();
+        }
     }
 
     public void StartPlayerTurn()
@@ -81,6 +100,34 @@ public class GameManager : MonoBehaviour
         OnPlayerTurnStarted?.Invoke();
         OnTurnChanged?.Invoke(CurrentTurn);
         additionalDamage = 0;
+    }
+
+    public void ShowCurrency()
+    {
+        Color c = currencyDisplay.color;
+        c.a = 1f;
+        currencyDisplay.color = c;
+
+
+        c = currencyIcon.color;
+        c.a = 1f;
+        currencyIcon.color = c;
+    }
+
+    public void HideCurrency()
+    {
+        Color c = currencyDisplay.color;
+        c.a = 0f;
+        currencyDisplay.color = c;
+
+        c = currencyIcon.color;
+        c.a = 0f;
+        currencyIcon.color = c;
+    }
+
+    public void UpdateCurrencyDisplay()
+    {
+        currencyDisplay.text = Currency.ToString();
     }
 
     public void OnEndTurnButtonPressed()
@@ -135,6 +182,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log($"Enemy defeated! Total: {TotalEnemiesDefeated} | Next enemy health multiplier: {GetHealthMultiplier():F2}x | damage multiplier: {GetDamageMultiplier():F2}x");
                 CreepySpotlightFlicker.Instance.OnEnemyDied();
                 Currency += 5;
+                currencyDisplay.text = Currency.ToString();
                 StartShoppingTurn();
                 return;
             }
@@ -208,6 +256,7 @@ public class GameManager : MonoBehaviour
     {
         previousScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene("Settings");
+        HideCurrency();
     }
    
 
@@ -217,6 +266,7 @@ public class GameManager : MonoBehaviour
         if (string.IsNullOrEmpty(previousScene))
         {
             SceneManager.LoadScene("MainMenu");
+            HideCurrency();
             return;
         }
 

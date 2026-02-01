@@ -1285,6 +1285,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b7031bc054903c442a8e9129ddf502c6, type: 2}
   - {fileID: 11400000, guid: cb022b1739110bd4e80aebde8c91b534, type: 2}
   - {fileID: 11400000, guid: 8fcdf02de6f9e8f4093ca0b76fedbdc2, type: 2}
+  - {fileID: 11400000, guid: 0dfff00bae3c0854dbac4ae955ddf111, type: 2}
+  - {fileID: 11400000, guid: a30e7ff592138684db21d6b597646308, type: 2}
+  - {fileID: 11400000, guid: bdec57d92866ef7408b1786356c90b74, type: 2}
   currentEnemy: {fileID: 0}
   planePos: {fileID: 1465879246}
   enemyVisualPrefab: {fileID: 1465879245}

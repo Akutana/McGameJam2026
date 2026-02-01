@@ -8,7 +8,10 @@ public class ShopItem : MonoBehaviour
     [SerializeField] private Image image;
     [SerializeField] private TextMeshProUGUI textMesh;
     [SerializeField] private GameObject test;
+
+    private CardData cardData;
     private int price;
+    private bool hasBeenBought;
 
     private void Awake()
     {
@@ -19,12 +22,26 @@ public class ShopItem : MonoBehaviour
     {
         image.sprite = card.art;
         price = card.price;
+        cardData = card;
     }
 
     public void OnMouseOver()
     {
+        if (hasBeenBought) { return;  }
         textMesh.text = price.ToString();
         textMesh.enabled = true;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (GameManager.Instance.Currency >= price)
+            {
+                hasBeenBought = true;
+                Debug.Log("adding card");
+                image.enabled = false;
+                HandManager.Instance.AddCardToDeck(cardData);
+                GameManager.Instance.Currency -= price;
+            }
+        }
     }
 
     private void OnMouseExit()

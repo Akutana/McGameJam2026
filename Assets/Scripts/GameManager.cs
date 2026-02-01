@@ -64,12 +64,19 @@ public class GameManager : MonoBehaviour
 
    public void OnEndTurnButtonPressed()
     {
+        if (DiceManager.Instance.AreAnyDiceRolling())
+        {
+            return;
+        }
+
+        Debug.Log("End Turn Button Pressed");
+
         if (CurrentTurn != TurnState.PlayerTurn) return;
 
         // Clear the hand using the singleton
         HandManager.Instance?.ClearHand();
 
-    StartEnemyTurn();
+        StartEnemyTurn();
     }
 
     public void StartEnemyTurn()

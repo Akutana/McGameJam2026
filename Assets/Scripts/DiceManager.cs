@@ -34,12 +34,24 @@ public class DiceManager : MonoBehaviour
     {
         foreach (var dice in diceRollers)
         {
+            Debug.Log("DiceManager: Checking dice rolling status.");
+
             if (dice == null)
+            {
+                Debug.LogWarning("DiceManager: Found a null DiceRoller reference in the list.");
                 continue;
+            }
+                
 
             if (dice.isRolling)
+            {
+                Debug.Log("DiceManager: At least one dice is still rolling.");
                 return true;
+            }
+                
         }
+
+        Debug.Log("DiceManager: All dice have stopped rolling.");
 
         return false;
     }

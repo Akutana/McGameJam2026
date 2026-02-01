@@ -10,25 +10,18 @@ public class EndTurnButtonUI : MonoBehaviour
         btn = GetComponent<Button>();
 
         // Hook the click in code
-        btn.onClick.AddListener(() =>
-        {
-            GameManager.Instance?.OnEndTurnButtonPressed();
-        });
+        btn.onClick.AddListener(OnEndTurnClicked);
+    }
+
+    private void OnEndTurnClicked()
+    {
+        // Safe to end turn
+        GameManager.Instance?.OnEndTurnButtonPressed();
     }
 
     private void OnEnable()
     {
-
-        //if (DiceManager.Instance.AreAllDiceStopped())
-        {
-            GameManager.OnTurnChanged += HandleTurnChanged;
-        }
-      
-    }
-    private void HandleTurnChanged(GameManager.TurnState newTurn)
-    {
-        Debug.Log($"EndTurnButtonUI: Turn changed to {newTurn}");
-        // Show button only on player's turn
-        btn.gameObject.SetActive(newTurn == GameManager.TurnState.PlayerTurn);
+        // Always show button, no need to subscribe/unsubscribe
+        btn.gameObject.SetActive(true);
     }
 }

@@ -17,6 +17,9 @@ public class DiceRoller : MonoBehaviour
 
     public int diceFaceNumber;
 
+    // <-- key change: use property to check physics too
+    public bool IsRolling => isRolling || (rb != null && !rb.IsSleeping());
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -27,22 +30,22 @@ public class DiceRoller : MonoBehaviour
 
     private void Start()
     {
+        // register self with DiceManager on awake
         DiceManager.Instance?.RegisterDice(this);
     }
 
     private void Update()
     {
-        if (rb == null) { return; }
+        if (rb == null) return;
 
+        // only mark rolling false if physics has stopped
         if (rb.IsSleeping())
         {
             CheckTopSide();
             isRolling = false;
         }
 
-
-         TextLogic();
-       
+        TextLogic();
     }
 
     private void OnMouseOver()

@@ -18,9 +18,13 @@ public class EndTurnButtonUI : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.OnTurnChanged += HandleTurnChanged;
-    }
 
+        if (DiceManager.Instance.AreAllDiceStopped())
+        {
+            GameManager.OnTurnChanged += HandleTurnChanged;
+        }
+      
+    }
     private void HandleTurnChanged(GameManager.TurnState newTurn)
     {
         Debug.Log($"EndTurnButtonUI: Turn changed to {newTurn}");

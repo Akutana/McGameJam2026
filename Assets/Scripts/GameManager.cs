@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
 
         if(CreepySpotlightFlicker.Instance != null)
         {
-            CreepySpotlightFlicker.Instance.currentEnemy.health -= 10;
+            CreepySpotlightFlicker.Instance.currentEnemy.health -= DiceManager.Instance.GetTotalDiceValue(); ;
         }
 
         Invoke(nameof(EndEnemyTurn), 1f);

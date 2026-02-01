@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEditor.Rendering;
 using UnityEngine;
@@ -9,9 +10,10 @@ public class DiceRoller : MonoBehaviour
     [SerializeField] private DiceSide[] diceSides;
     private Rigidbody rb;
     private TextMeshPro textMesh;
+    public bool isDiceActive = true;
 
     private float forceX, forceY, forceZ;
-    private bool isRolling;
+    public bool isRolling = false;
 
     public int diceFaceNumber;
 
@@ -21,6 +23,11 @@ public class DiceRoller : MonoBehaviour
         textMesh = GetComponentInChildren<TextMeshPro>();
         rb.isKinematic = true;
         transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+    }
+
+    private void Start()
+    {
+        DiceManager.Instance?.RegisterDice(this);
     }
 
     private void Update()

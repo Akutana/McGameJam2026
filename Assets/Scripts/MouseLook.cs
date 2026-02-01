@@ -4,6 +4,7 @@ public class MouseLook : MonoBehaviour
 {
     public float mouseSensitivity = 150f;
     public Transform cameraPivot;
+    
 
     float xRotation = 0f;
 
@@ -15,6 +16,8 @@ public class MouseLook : MonoBehaviour
 
     void Update()
     {
+        
+
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
@@ -26,5 +29,7 @@ public class MouseLook : MonoBehaviour
 
         // Horizontal look (player body)
         transform.Rotate(Vector3.up * mouseX);
+
+        
     }
 }

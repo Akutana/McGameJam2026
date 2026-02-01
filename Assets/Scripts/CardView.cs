@@ -117,6 +117,8 @@ public class CardView : MonoBehaviour
         ps.transform.rotation = Quaternion.identity;
         ps.Play();
 
+        SoundPlayer.Instance.PlayCardSound();
+
         StartCoroutine(FadeAndStopParticles(ps, 1)); // 1s de fade
 
         yield return new WaitForSeconds(ps.main.duration);

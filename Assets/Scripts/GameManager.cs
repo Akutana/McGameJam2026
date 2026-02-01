@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public static event System.Action<GameManager.TurnState> OnTurnChanged;
     public static event Action OnShopTurnStarted;
     public static event Action OnShopTransitionFinised;
- 	public int TotalEnemiesDefeated { get; set; } = 0;
+    public int TotalEnemiesDefeated { get; set; } = 0;
     public int NumberofRerolls { get; set; } = 3;
     public int Currency { get; set; } = 0;
 
@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Turn Timing")]
     [SerializeField] private float delayBeforePlayerTurn = 1.5f; // Delay after enemy attacks
+    [SerializeField] private float deathAnimationDelay = 1.5f; // Delay before going to shop after enemy death
 
     public float GetHealthMultiplier()
     {
@@ -125,14 +126,20 @@ public class GameManager : MonoBehaviour
             CreepySpotlightFlicker.Instance.currentEnemy.maxHealth -= damage;
             Debug.Log("Dealt " + damage + " damage to enemy.");
 
+            SoundPlayer.Instance?.PlayAttackenemySound();
+
             // Check if enemy died
             if (CreepySpotlightFlicker.Instance.currentEnemy.maxHealth <= 0)
             {
                 TotalEnemiesDefeated++;
                 Debug.Log($"Enemy defeated! Total: {TotalEnemiesDefeated} | Next enemy health multiplier: {GetHealthMultiplier():F2}x | damage multiplier: {GetDamageMultiplier():F2}x");
+
+                // Trigger death animation
                 CreepySpotlightFlicker.Instance.OnEnemyDied();
                 Currency += 5;
-                StartShoppingTurn();
+
+                // Wait for death animation before going to shop
+                Invoke(nameof(StartShoppingTurn), deathAnimationDelay);
                 return;
             }
         }
@@ -182,7 +189,7 @@ public class GameManager : MonoBehaviour
 
         OnTurnChanged?.Invoke(CurrentTurn);
 
-        if(CreepySpotlightFlicker.Instance != null)
+        if (CreepySpotlightFlicker.Instance != null)
         {
             CreepySpotlightFlicker.Instance.currentEnemy.maxHealth -= 10;
         }
@@ -201,7 +208,6 @@ public class GameManager : MonoBehaviour
         previousScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene("Settings");
     }
-   
 
     public void LoadPreviousScene()
     {

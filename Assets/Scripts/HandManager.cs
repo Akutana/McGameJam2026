@@ -24,6 +24,10 @@ public class HandManager : MonoBehaviour
 
     private List<GameObject> handCards = new();
 
+    private Vector3 cameraOriginalPos;
+    private CameraParallax cameraParallax;
+    private float drawDelay;
+
     private void Awake()
     {
         // Singleton pattern
@@ -33,12 +37,17 @@ public class HandManager : MonoBehaviour
             return;
         }
         Instance = this;
+
+        cameraParallax = Camera.main.GetComponent<CameraParallax>();
     }
 
     private void Start()
     {
         // Draw initial hand only if it's already player turn
         TryDrawInitialHand();
+
+        GameManager.OnShopTurnStarted += AssignDrawDelayValue;
+        cameraOriginalPos = Camera.main.transform.position;
     }
 
     private void TryDrawInitialHand()
@@ -82,6 +91,18 @@ public class HandManager : MonoBehaviour
     {
         Debug.Log("HandManager: Player Turn Started - Drawing Cards");
 
+        if (IsCameraAtOrigin())
+        {
+            DrawHand();
+        }
+        else
+        {
+            StartCoroutine(WaitForCameraThenDraw());
+        }
+    }
+
+    private void DrawHand()
+    {
         for (int i = 0; i < drawNumber; i++)
         {
             DrawCard();
@@ -196,5 +217,26 @@ public class HandManager : MonoBehaviour
             return handCards[0].transform.position.x;
         else
             return 0.0f;
+    }
+
+    private void AssignDrawDelayValue()
+    {
+        drawDelay = drawDelay == 10f ? 0.15f : 10f;
+    }
+
+    private bool IsCameraAtOrigin()
+    {
+        return Vector3.Distance(Camera.main.transform.position, cameraOriginalPos) < 0.1f;
+    }
+
+    private IEnumerator WaitForCameraThenDraw()
+    {
+        while (!IsCameraAtOrigin())
+        {
+            yield return null;
+        }
+
+        cameraParallax.isShopActivated = false;
+        DrawHand();
     }
 }

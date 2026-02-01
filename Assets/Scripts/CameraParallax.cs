@@ -12,7 +12,7 @@ public class CameraParallax : MonoBehaviour
     private Vector3 shopPos = new Vector3(0, 0, -20);
     private Vector3 targetPosition;
     private Quaternion targetRotation;
-    private bool isShopActivated;
+    public bool isShopActivated;
     private bool isTurning;
     private bool isMoving;
 

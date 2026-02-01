@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public static event Action OnPlayerTurnStarted;
     public static event System.Action<GameManager.TurnState> OnTurnChanged;
     public static event Action OnShopTurnStarted;
+    public static event Action OnShopTransitionFinised;
  	public int TotalEnemiesDefeated { get; set; } = 0;
     public int NumberofRerolls { get; set; } = 3;
     

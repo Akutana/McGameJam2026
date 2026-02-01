@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: The joker
   description: Heals for 4
-  art: {fileID: 21300000, guid: 537715d395ba7e64ba98e870e21ca33f, type: 3}
+  art: {fileID: -411175242, guid: 49a312086c263dc42bb1a4e9f16318e2, type: 3}
   price: 2
   type: 0
   value: 4

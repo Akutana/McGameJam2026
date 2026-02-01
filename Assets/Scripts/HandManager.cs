@@ -33,7 +33,7 @@ public class HandManager : MonoBehaviour
     public static HandManager Instance { get; private set; }
 
     [Header("Hand Settings")]
-    [SerializeField] private int maxHandSize = 5;
+    [SerializeField] private int maxHandSize = 3;
     [SerializeField] private int drawNumber = 3;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private SplineContainer splineContainer;

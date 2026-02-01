@@ -1,38 +1,54 @@
 using UnityEngine;
 using DG.Tweening;
+using System.Collections;
 
 public class CardView : MonoBehaviour
 {
     [SerializeField] private CardData cardData;
-     private HandManager handManager;
+    private HandManager handManager;
     private Vector3 originalScale;
-    private bool isHovered;
+
+    public bool canInteract = false;
 
     private void Awake()
     {
         originalScale = transform.localScale;
+        DisableInteractionTemporarily(2f); 
     }
 
     private void OnMouseEnter()
     {
-        isHovered = true;
+        if (!canInteract) return;
+
+        transform.DOKill();
         transform.DOScale(originalScale * 1.15f, 0.15f);
-        TooltipUI.Instance.Show(cardData.description);
+
+        TooltipUI.Instance?.Show(cardData.description);
     }
 
     private void OnMouseExit()
     {
-        isHovered = false;
+        if (!canInteract) return;
+
+        transform.DOKill();
         transform.DOScale(originalScale, 0.15f);
-        TooltipUI.Instance.Hide();
+
+        TooltipUI.Instance?.Hide();
     }
 
     private void OnMouseDown()
     {
-        cardData.Play();
-        TooltipUI.Instance.Hide();
-        handManager.RemoveCard(gameObject);
-        Destroy(gameObject);
+        if (!canInteract) return;
+
+        canInteract = false; 
+
+        transform.DOKill();
+        TooltipUI.Instance?.Hide();
+
+        cardData?.Play();
+
+        handManager?.OnCardPlayed();
+        handManager?.RemoveCard(gameObject);
     }
 
     public void SetData(CardData data)
@@ -43,5 +59,17 @@ public class CardView : MonoBehaviour
     public void SetHandManager(HandManager manager)
     {
         handManager = manager;
+    }
+
+    public void DisableInteractionTemporarily(float duration)
+    {
+        StartCoroutine(InteractionCooldown(duration));
+    }
+
+    private IEnumerator InteractionCooldown(float duration)
+    {
+        canInteract = false;
+        yield return new WaitForSeconds(duration);
+        canInteract = true;
     }
 }

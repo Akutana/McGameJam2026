@@ -1,5 +1,6 @@
-using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -43,9 +44,15 @@ public class HandManager : MonoBehaviour
 
         Debug.Log("HandManager: Drawing initial hand");
 
-        for (int i = 0; i < drawNumber; i++)
+        StartCoroutine(DrawCardsWithDelay(drawNumber, 0.15f));
+    }
+
+    private IEnumerator DrawCardsWithDelay(int count, float delay)
+    {
+        for (int i = 0; i < count; i++)
         {
             DrawCard();
+            yield return new WaitForSeconds(delay);
         }
     }
 
@@ -74,18 +81,17 @@ public class HandManager : MonoBehaviour
         if (handCards.Count >= maxHandSize) return;
         if (availableCards.Count == 0) return;
 
-        // Pick a random card from availableCards
         CardData data = availableCards[Random.Range(0, availableCards.Count)];
 
-        // Instantiate card prefab
         GameObject g = Instantiate(cardPrefab, spawnPoint.position, spawnPoint.rotation);
 
-        // Set card data on CardView
         CardView view = g.GetComponent<CardView>();
         if (view != null)
+        {
             view.SetData(data);
+            view.SetHandManager(this); 
+        }
 
-        // Add to hand and update positions
         handCards.Add(g);
         UpdateCardPositions();
     }
@@ -95,6 +101,9 @@ public class HandManager : MonoBehaviour
         if (!handCards.Contains(card)) return;
 
         handCards.Remove(card);
+
+        Destroy(card);
+
         UpdateCardPositions();
     }
 
@@ -111,6 +120,27 @@ public class HandManager : MonoBehaviour
                 Destroy(card);
         }
         handCards.Clear();
+    }
+
+    private IEnumerator DisableAllCardsTemporarily(float duration)
+    {
+        foreach (var card in handCards)
+        {
+            if (card == null) continue;
+
+            CardView view = card.GetComponent<CardView>();
+            if (view != null)
+            {
+                view.DisableInteractionTemporarily(duration);
+            }
+        }
+
+        yield return null;
+    }
+
+    public void OnCardPlayed()
+    {
+        StartCoroutine(DisableAllCardsTemporarily(1f));
     }
 
     private void UpdateCardPositions()

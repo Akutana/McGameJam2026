@@ -156,7 +156,7 @@ MonoBehaviour:
   availableCards:
   - {fileID: 11400000, guid: b1c85dfab9d1d654ea032a78882ba6c1, type: 2}
   - {fileID: 11400000, guid: e49abe4b887f20c40a9461cbe5d8c851, type: 2}
-  - {fileID: 11400000, guid: 4388e64ca53cb474a958757bd781da83, type: 2}
+  - {fileID: 11400000, guid: 0afcf79439bdf924e95593ff44b23b59, type: 2}
   lightFlicker: {fileID: 1031542601}
   player: {fileID: 1092105442}
   currentEnemy: {fileID: 1465879245}
@@ -1172,9 +1172,10 @@ MonoBehaviour:
   inventory:
   - {fileID: 11400000, guid: b1c85dfab9d1d654ea032a78882ba6c1, type: 2}
   - {fileID: 11400000, guid: e49abe4b887f20c40a9461cbe5d8c851, type: 2}
-  - {fileID: 11400000, guid: 4388e64ca53cb474a958757bd781da83, type: 2}
+  - {fileID: 11400000, guid: 154e7c8357544a64688d58e295734200, type: 2}
   - {fileID: 11400000, guid: 0afcf79439bdf924e95593ff44b23b59, type: 2}
   - {fileID: 11400000, guid: c471da6e03c2aad4e90d2bda3bcda44d, type: 2}
+  - {fileID: 11400000, guid: 922faf596e1ad2b4ca544088ca88ac3b, type: 2}
   currentItems: []
   shopItems:
   - {fileID: 367226919}
@@ -1669,14 +1670,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 450c76b5cca98e94cbd061811915e61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  maxHealth: 4
+  maxHealth: 30
   health: {fileID: 1092105445}
   fadeImage: {fileID: 636364441}
   fadeDuration: 2
   endMenuSceneName: EndMenu
   lowHealthThreshold: 0.3
-  playerDamageFlashIntensity: 900
-  playerDamageFlashDuration: 0.15
 --- !u!114 &1092105445
 MonoBehaviour:
   m_ObjectHideFlags: 0

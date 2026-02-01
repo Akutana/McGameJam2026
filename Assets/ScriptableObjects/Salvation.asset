@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ac4740dcac360648b7d42e708946311, type: 3}
-  m_Name: CardData 2
+  m_Name: Salvation
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  cardName: Twin towers
-  description: deals 9 to 11 damage
-  art: {fileID: 21300000, guid: 89d2ee46fc405654ba8c2b2ab5ee5a7e, type: 3}
-  price: 3
-  type: 1
-  value: 0
+  cardName: salvation
+  description: Heal for 10
+  art: {fileID: -1863314312, guid: 1a0855e7ddc5c874cbfc666bc65f6ab9, type: 3}
+  price: 5
+  type: 0
+  value: 10

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ac4740dcac360648b7d42e708946311, type: 3}
-  m_Name: CardData
+  m_Name: Magic Heal
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  cardName: Mighty reroll
-  description: Gives you one more die roll this turn
-  art: {fileID: 1065545621, guid: df6188e013a5ec249abcd4e3acf89df3, type: 3}
-  price: 5
-  type: 2
-  value: 1
+  cardName: Magic heal
+  description: Heals you back
+  art: {fileID: -411175242, guid: 49a312086c263dc42bb1a4e9f16318e2, type: 3}
+  price: 2
+  type: 0
+  value: 3

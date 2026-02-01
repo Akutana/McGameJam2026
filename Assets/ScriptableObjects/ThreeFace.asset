@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: ThreeFace
   m_EditorClassIdentifier: Assembly-CSharp::Enemies
   enemyName: ThreeFace
-  damage: 3
-  maxHealth: 10
+  damage: 2
+  maxHealth: 25
   art: {fileID: 21300000, guid: df03ae4a52e18e941bf5a46badb99704, type: 3}

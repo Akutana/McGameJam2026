@@ -27,6 +27,15 @@ public class CreepySpotlightFlicker : MonoBehaviour
     [SerializeField] private float minSpriteAlpha = 0.2f;
     [SerializeField] private float maxSpriteAlpha = 1f;
 
+    [Header("Attack Animation")]
+    [SerializeField] private float attackLungeDistance = 0.3f;
+    [SerializeField] private float attackLungeDuration = 0.08f;
+
+    [Header("Hit Flash")]
+    [SerializeField] private Color hitFlashColor = Color.white;
+    [SerializeField] private float hitFlashDuration = 0.1f;
+    [SerializeField] private int hitFlashCount = 2;
+
     [Header("Death Animation")]
     [SerializeField] private float deathFadeDuration = 1.2f;
     [SerializeField] private float deathDropDistance = 1f; // How far down the sprite moves
@@ -302,12 +311,63 @@ public class CreepySpotlightFlicker : MonoBehaviour
 
     public void EnemyAction()
     {
-        if (currentEnemyVisual != null)
-        {
+        if (currentEnemyVisual == null)
+            return;
 
-            SoundPlayer.Instance?.PlayEnemyAttackSound();
-            StartCoroutine(JiggleSprite());
+        SoundPlayer.Instance?.PlayEnemyAttackSound();
+        StartCoroutine(AttackLunge());
+    }
+
+    public void PlayHitFlash()
+    {
+        if (currentSpriteRenderer != null)
+            StartCoroutine(HitFlash());
+    }
+
+    private IEnumerator HitFlash()
+    {
+        Color originalColor = currentSpriteRenderer.color;
+
+        for (int i = 0; i < hitFlashCount; i++)
+        {
+            currentSpriteRenderer.color = hitFlashColor;
+            yield return new WaitForSeconds(hitFlashDuration * 0.5f);
+
+            currentSpriteRenderer.color = originalColor;
+            yield return new WaitForSeconds(hitFlashDuration * 0.5f);
         }
+    }
+
+    private IEnumerator AttackLunge()
+    {
+        Vector3 startPos = currentEnemyVisual.transform.position;
+        Vector3 forwardPos = startPos + -currentEnemyVisual.transform.forward * attackLungeDistance;
+
+        float elapsed = 0f;
+
+        // Lunge forward
+        while (elapsed < attackLungeDuration)
+        {
+            currentEnemyVisual.transform.position =
+                Vector3.Lerp(startPos, forwardPos, elapsed / attackLungeDuration);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        elapsed = 0f;
+
+        // Snap back
+        while (elapsed < attackLungeDuration)
+        {
+            currentEnemyVisual.transform.position =
+                Vector3.Lerp(forwardPos, startPos, elapsed / attackLungeDuration);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        currentEnemyVisual.transform.position = startPos;
     }
 
     private IEnumerator JiggleSprite()

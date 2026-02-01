@@ -133,6 +133,7 @@ public class GameManager : MonoBehaviour
             CreepySpotlightFlicker.Instance.currentEnemy.maxHealth -= damage;
             Debug.Log("Dealt " + damage + " damage to enemy.");
 
+            CreepySpotlightFlicker.Instance?.PlayHitFlash();
             SoundPlayer.Instance?.PlayAttackenemySound();
 
             // Check if enemy died
@@ -204,6 +205,8 @@ public class GameManager : MonoBehaviour
 
         PlayerStats.Instance.health.DealDamage(CreepySpotlightFlicker.Instance.currentEnemy.damage);
 
+        MusicPlayer.Instance.PlayerisLowOnHealth = PlayerStats.Instance.IsLowOnHealth();
+  
         Invoke(nameof(EndEnemyTurn), 1f);
     }
 

@@ -1478,6 +1478,11 @@ MonoBehaviour:
   moveDuration: 2
   minSpriteAlpha: 0.2
   maxSpriteAlpha: 1
+  attackLungeDistance: 0.3
+  attackLungeDuration: 0.08
+  hitFlashColor: {r: 1, g: 1, b: 1, a: 1}
+  hitFlashDuration: 0.1
+  hitFlashCount: 2
   deathFadeDuration: 1.2
   deathDropDistance: 1
 --- !u!1 &1092105442
@@ -1525,11 +1530,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 450c76b5cca98e94cbd061811915e61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  maxHealth: 100
+  maxHealth: 4
   health: {fileID: 1092105445}
   fadeImage: {fileID: 636364441}
   fadeDuration: 2
   endMenuSceneName: EndMenu
+  lowHealthThreshold: 0.3
+  playerDamageFlashIntensity: 900
+  playerDamageFlashDuration: 0.15
 --- !u!114 &1092105445
 MonoBehaviour:
   m_ObjectHideFlags: 0

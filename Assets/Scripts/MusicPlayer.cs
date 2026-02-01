@@ -12,6 +12,7 @@ public class MusicPlayer : MonoBehaviour
 
     [SerializeField] private float fadeDuration = 1.5f;
 
+    public bool PlayerisLowOnHealth = false;
     private AudioSource audioSource;
     private Coroutine fadeRoutine;
 
@@ -29,6 +30,8 @@ public class MusicPlayer : MonoBehaviour
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.loop = true;
         audioSource.volume = 1f;
+
+          Play(mainTheme);
     }
 
     private void OnEnable()
@@ -48,8 +51,15 @@ public class MusicPlayer : MonoBehaviour
 
         if (state == GameManager.TurnState.ShoppingTurn)
             Play(shopTheme);
+        else if(PlayerisLowOnHealth)
+        {
+            Play(lowHpTheme);
+        }
         else
+        {
             Play(mainTheme);
+        }
+            
     }
 
     public void PlayGameOver()

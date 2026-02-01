@@ -14,8 +14,12 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private Image fadeImage; // Use Image instead of CanvasGroup
     [SerializeField] private float fadeDuration = 2f;
     [SerializeField] private string endMenuSceneName = "EndMenu";
+    [Header("Low Health Settings")]
+    [SerializeField, Range(0f, 1f)]
+    private float lowHealthThreshold = 0.3f; // 30%
 
     private bool isDead = false;
+
 
     private void Awake()
     {
@@ -53,6 +57,13 @@ public class PlayerStats : MonoBehaviour
     {
         health.Init(maxHealth);
     }
+    public bool IsLowOnHealth()
+    {
+        if (health == null)
+            return false;
+
+        return health.GetCurrentHealth() <= maxHealth * lowHealthThreshold;
+    }
 
     private void Update()
     {
@@ -62,6 +73,11 @@ public class PlayerStats : MonoBehaviour
             isDead = true;
             Debug.Log("Player died! Starting fade...");
             StartCoroutine(HandleDeath());
+        }
+
+        if(IsLowOnHealth())
+        {
+
         }
     }
 

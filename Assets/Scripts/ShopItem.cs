@@ -20,9 +20,14 @@ public class ShopItem : MonoBehaviour
 
     public void Setup(CardData card)
     {
-        image.sprite = card.art;
-        price = card.price;
         cardData = card;
+        price = card.price;
+
+        image.sprite = card.art;
+        image.enabled = true;
+
+        hasBeenBought = false;   
+        textMesh.enabled = false;
     }
 
     public void OnMouseOver()

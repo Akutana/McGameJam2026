@@ -1525,7 +1525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 450c76b5cca98e94cbd061811915e61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  maxHealth: 1
+  maxHealth: 100
   health: {fileID: 1092105445}
   fadeImage: {fileID: 636364441}
   fadeDuration: 2

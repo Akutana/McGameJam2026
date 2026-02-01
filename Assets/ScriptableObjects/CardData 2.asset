@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ac4740dcac360648b7d42e708946311, type: 3}
-  m_Name: CardData
+  m_Name: CardData 2
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: The joker
   description: i am the jokey
-  art: {fileID: 21300000, guid: 0be1226e5f4e0004b9e9add3d8f4311b, type: 3}
+  art: {fileID: 21300000, guid: e6b3cf1f5d9d34840a432b4f5f743612, type: 3}

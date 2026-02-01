@@ -5,6 +5,10 @@ public class CardData : ScriptableObject
 {
     public string cardName;
     [TextArea] public string description;
+
+    public Sprite art;
+    public int price;
+
     public void Play()
     {
         Debug.Log("Played " + cardName);

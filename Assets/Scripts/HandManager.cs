@@ -20,6 +20,8 @@ public class HandManager : MonoBehaviour
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private List<CardData> availableCards;
 
+    [SerializeField] private CreepySpotlightFlicker lightFlicker;
+
     private List<GameObject> handCards = new();
 
     private void Awake()
@@ -46,7 +48,15 @@ public class HandManager : MonoBehaviour
 
         Debug.Log("HandManager: Drawing initial hand");
 
+        StartCoroutine(IntroduceEnemyDelay());
+
         StartCoroutine(DrawCardsWithDelay(drawNumber, 0.15f));
+    }
+
+    private IEnumerator IntroduceEnemyDelay()
+    {
+        yield return new WaitForSeconds(2f);
+        lightFlicker.IntroduceEnemy();
     }
 
     private IEnumerator DrawCardsWithDelay(int count, float delay)

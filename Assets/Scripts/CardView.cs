@@ -17,7 +17,11 @@ public class CardView : MonoBehaviour
     private void Awake()
     {
         originalScale = transform.localScale;
-        DisableInteractionTemporarily(2f); 
+
+        cardNameText = transform.GetChild(0).GetComponent<TextMeshPro>();
+        cardDescText = transform.GetChild(1).GetComponent<TextMeshPro>();
+
+        DisableInteractionTemporarily(2f);
     }
 
     private void OnMouseEnter()
@@ -40,6 +44,7 @@ public class CardView : MonoBehaviour
     private void OnMouseExit()
     {
         if (!canInteract) return;
+        if (cardNameText == null || cardDescText == null) return;
 
         transform.DOKill();
         transform.DOScale(originalScale, 0.15f);

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemies
   cardName: the crab
   damage: 1
-  health: 2
+  health: 7
   art: {fileID: 21300000, guid: 4131896ca958ccc4fa048f4896c7b776, type: 3}

@@ -105,6 +105,8 @@ public class GameManager : MonoBehaviour
 
     public void EndEnemyTurn()
     {
+        CreepySpotlightFlicker.Instance?.EnemyAction();
+
         StartPlayerTurn();
     }
 

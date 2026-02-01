@@ -130,7 +130,10 @@ public class CreepySpotlightFlicker : MonoBehaviour
 
     private void SpawnEnemyVisual()
     {
-        currentEnemy = enemies[Random.Range(0, enemies.Count)];
+        Enemies enemyTemplate = enemies[Random.Range(0, enemies.Count)];
+
+        // Create a runtime copy using Instantiate
+        currentEnemy = Instantiate(enemyTemplate);
 
         currentEnemyVisual = Instantiate(
             enemyVisualPrefab,
@@ -223,6 +226,47 @@ public class CreepySpotlightFlicker : MonoBehaviour
 
             elapsed += Time.deltaTime;
             yield return null;
+        }
+    }
+
+    public void EnemyAction()
+    {
+        if (currentEnemyVisual != null)
+        {
+            StartCoroutine(JiggleSprite());
+        }
+    }
+
+    private IEnumerator JiggleSprite()
+    {
+        if (currentEnemyVisual == null)
+            yield break;
+
+        Vector3 originalPosition = currentEnemyVisual.transform.position;
+        float jiggleDuration = 0.5f;
+        float jiggleIntensity = 0.2f;
+        float jiggleSpeed = 30f;
+        float elapsed = 0f;
+
+        while (elapsed < jiggleDuration)
+        {
+            if (currentEnemyVisual != null)
+            {
+                // Random offset in X and Y directions
+                float offsetX = Mathf.Sin(Time.time * jiggleSpeed) * jiggleIntensity;
+                float offsetY = Mathf.Cos(Time.time * jiggleSpeed * 1.3f) * jiggleIntensity;
+
+                currentEnemyVisual.transform.position = originalPosition + new Vector3(offsetX, offsetY, 0);
+            }
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // Return to original position
+        if (currentEnemyVisual != null)
+        {
+            currentEnemyVisual.transform.position = originalPosition;
         }
     }
 }

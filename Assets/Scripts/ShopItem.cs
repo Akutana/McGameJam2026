@@ -26,7 +26,7 @@ public class ShopItem : MonoBehaviour
     {
         cardData = card;
         price = card.price;
-        name = card.name;
+        name = card.cardName;
         description = card.description;
 
         image.sprite = card.art;

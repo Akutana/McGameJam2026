@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public static event System.Action<GameManager.TurnState> OnTurnChanged;
     public static event Action OnShopTurnStarted;
     public static event Action OnShopTransitionFinised;
- 	public int TotalEnemiesDefeated { get; set; } = 0;
+    public int TotalEnemiesDefeated { get; set; } = 0;
     public int NumberofRerolls { get; set; } = 3;
     public int Currency { get; set; } = 0;
 
@@ -32,7 +32,20 @@ public class GameManager : MonoBehaviour
         ShoppingTurn
     }
 
+    public enum GameResult
+    {
+        None,
+        Win,
+        Lose
+    }
+
+    public GameResult FinalResult { get; private set; } = GameResult.None;
     public TurnState CurrentTurn { get; private set; } = TurnState.None;
+
+    public void SetGameResult(GameResult result)
+    {
+        FinalResult = result;
+    }
 
     [Header("Difficulty Scaling")]
     [SerializeField] private float healthIncreasePerKill = 2f; // +2 health per enemy killed
@@ -40,6 +53,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Turn Timing")]
     [SerializeField] private float delayBeforePlayerTurn = 1.5f; // Delay after enemy attacks
+    [SerializeField] private float deathAnimationDelay = 1.5f; // Delay before going to shop after enemy death
 
     public float GetHealthMultiplier()
     {
@@ -68,7 +82,6 @@ public class GameManager : MonoBehaviour
 
     public void ResetGame()
     {
-        Debug.Log("Resetting game");
         TotalEnemiesDefeated = 0;
         Currency = 0;
         currencyDisplay.text = Currency.ToString();
@@ -95,7 +108,6 @@ public class GameManager : MonoBehaviour
     {
         NumberofRerolls = 3;
         CurrentTurn = TurnState.PlayerTurn;
-        Debug.Log("Player Turn");
 
         OnPlayerTurnStarted?.Invoke();
         OnTurnChanged?.Invoke(CurrentTurn);
@@ -132,7 +144,6 @@ public class GameManager : MonoBehaviour
 
     public void OnEndTurnButtonPressed()
     {
-        Debug.Log($"=== End Turn Button Pressed === Current State: {CurrentTurn}");
 
         // Handle shopping turn FIRST, before any other checks
         if (CurrentTurn == TurnState.ShoppingTurn)
@@ -155,15 +166,12 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("Passed dice check");
-
         if (CurrentTurn != TurnState.PlayerTurn)
         {
             Debug.LogWarning($"Not player turn (current: {CurrentTurn}), ignoring");
             return;
         }
 
-        Debug.Log("Processing combat turn end");
 
         // Clear the hand using the singleton
         HandManager.Instance?.ClearHand();
@@ -175,13 +183,26 @@ public class GameManager : MonoBehaviour
             CreepySpotlightFlicker.Instance.currentEnemy.maxHealth -= damage;
             Debug.Log("Dealt " + damage + " damage to enemy.");
 
+            SoundPlayer.Instance?.PlayAttackenemySound();
+
             // Check if enemy died
             if (CreepySpotlightFlicker.Instance.currentEnemy.maxHealth <= 0)
             {
                 TotalEnemiesDefeated++;
-                Debug.Log($"Enemy defeated! Total: {TotalEnemiesDefeated} | Next enemy health multiplier: {GetHealthMultiplier():F2}x | damage multiplier: {GetDamageMultiplier():F2}x");
+
+                if (TotalEnemiesDefeated >= 5)
+                {
+                    FinalResult = GameResult.Win;
+                    SceneManager.LoadScene("EndMenu");
+                    return;
+                }
+
+                // Trigger death animation
                 CreepySpotlightFlicker.Instance.OnEnemyDied();
                 Currency += 5;
+
+                // Wait for death animation before going to shop
+                Invoke(nameof(StartShoppingTurn), deathAnimationDelay);
                 currencyDisplay.text = Currency.ToString();
                 StartShoppingTurn();
                 return;
@@ -233,10 +254,7 @@ public class GameManager : MonoBehaviour
 
         OnTurnChanged?.Invoke(CurrentTurn);
 
-        if(CreepySpotlightFlicker.Instance != null)
-        {
-            CreepySpotlightFlicker.Instance.currentEnemy.maxHealth -= 10;
-        }
+        PlayerStats.Instance.health.DealDamage(CreepySpotlightFlicker.Instance.currentEnemy.damage);
 
         Invoke(nameof(EndEnemyTurn), 1f);
     }
@@ -249,7 +267,7 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         ResetGame();
-        SceneManager.LoadScene("Xavier2");
+        SceneManager.LoadScene("StartingMenu");
     }
 
     public void DisplaySettings()
@@ -258,14 +276,13 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Settings");
         HideCurrency();
     }
-   
 
     public void LoadPreviousScene()
     {
         // Safety fallback
         if (string.IsNullOrEmpty(previousScene))
         {
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("StartingMenu");
             HideCurrency();
             return;
         }

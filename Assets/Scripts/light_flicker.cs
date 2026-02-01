@@ -27,6 +27,10 @@ public class CreepySpotlightFlicker : MonoBehaviour
     [SerializeField] private float minSpriteAlpha = 0.2f;
     [SerializeField] private float maxSpriteAlpha = 1f;
 
+    [Header("Death Animation")]
+    [SerializeField] private float deathFadeDuration = 1.2f;
+    [SerializeField] private float deathDropDistance = 1f; // How far down the sprite moves
+
     private Coroutine continuousFlickerCoroutine;
     private GameObject currentEnemyVisual;
     private SpriteRenderer currentSpriteRenderer;
@@ -42,7 +46,6 @@ public class CreepySpotlightFlicker : MonoBehaviour
         }
         Instance = this;
 
-
         if (spotLight == null)
             spotLight = GetComponent<Light>();
 
@@ -51,15 +54,12 @@ public class CreepySpotlightFlicker : MonoBehaviour
 
         if (planePos == null)
             Debug.LogWarning("No planePos assigned!");
-
     }
 
     private void Update()
     {
         //Debug.Log("enemy health" + Instance.currentEnemy.maxHealth);
     }
-
-
 
     public void IntroduceEnemy()
     {
@@ -101,15 +101,71 @@ public class CreepySpotlightFlicker : MonoBehaviour
 
     private IEnumerator EnemyDeathSequence()
     {
-        // Optional: death flicker / delay
+        // Stop continuous flicker
+        if (continuousFlickerCoroutine != null)
+        {
+            StopCoroutine(continuousFlickerCoroutine);
+            continuousFlickerCoroutine = null;
+        }
+
+        // Fade out and drop the enemy sprite
+        yield return StartCoroutine(FadeAndDropEnemy());
+
+        // Optional: short flicker after death
         spotLight.enabled = false;
-
-        yield return StartCoroutine(RemoveCurrentEnemy());
-
         yield return new WaitForSeconds(blackoutTime);
-
         spotLight.enabled = true;
         spotLight.intensity = baseIntensity;
+
+        // Clean up
+        if (currentEnemyVisual != null)
+            Destroy(currentEnemyVisual);
+
+        currentEnemyVisual = null;
+        currentSpriteRenderer = null;
+        currentEnemy = null;
+    }
+
+    private IEnumerator FadeAndDropEnemy()
+    {
+        if (currentEnemyVisual == null || currentSpriteRenderer == null)
+            yield break;
+
+        Vector3 startPosition = currentEnemyVisual.transform.position;
+        Vector3 endPosition = startPosition + Vector3.down * deathDropDistance;
+        Color startColor = currentSpriteRenderer.color;
+        float elapsed = 0f;
+
+        while (elapsed < deathFadeDuration)
+        {
+            if (currentEnemyVisual != null && currentSpriteRenderer != null)
+            {
+                // Fade out alpha
+                float alpha = Mathf.Lerp(1f, 0f, elapsed / deathFadeDuration);
+                Color newColor = startColor;
+                newColor.a = alpha;
+                currentSpriteRenderer.color = newColor;
+
+                // Move down
+                currentEnemyVisual.transform.position = Vector3.Lerp(startPosition, endPosition, elapsed / deathFadeDuration);
+            }
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure fully transparent and at final position
+        if (currentSpriteRenderer != null)
+        {
+            Color finalColor = startColor;
+            finalColor.a = 0f;
+            currentSpriteRenderer.color = finalColor;
+        }
+
+        if (currentEnemyVisual != null)
+        {
+            currentEnemyVisual.transform.position = endPosition;
+        }
     }
 
     private IEnumerator RemoveCurrentEnemy()
@@ -165,7 +221,6 @@ public class CreepySpotlightFlicker : MonoBehaviour
 
         StartCoroutine(FadeSprite(0f, 1f, 0.3f));
     }
-
 
     private IEnumerator ShortFlicker(float duration)
     {
@@ -249,6 +304,8 @@ public class CreepySpotlightFlicker : MonoBehaviour
     {
         if (currentEnemyVisual != null)
         {
+
+            SoundPlayer.Instance?.PlayEnemyAttackSound();
             StartCoroutine(JiggleSprite());
         }
     }
@@ -263,6 +320,7 @@ public class CreepySpotlightFlicker : MonoBehaviour
         float jiggleIntensity = 0.2f;
         float jiggleSpeed = 30f;
         float elapsed = 0f;
+
 
         while (elapsed < jiggleDuration)
         {

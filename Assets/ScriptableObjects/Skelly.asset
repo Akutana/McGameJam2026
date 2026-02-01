@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemies
   enemyName: Skelly
   damage: 3
-  maxHealth: 1
+  maxHealth: 10
   art: {fileID: 21300000, guid: 2ced9be63a3b60e43a8da076477206c4, type: 3}

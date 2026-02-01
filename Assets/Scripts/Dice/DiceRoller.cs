@@ -98,6 +98,7 @@ public class DiceRoller : MonoBehaviour
         rb.AddTorque(forceX, forceY, forceZ);
 
         GameManager.Instance.NumberofRerolls--;
+        GameManager.Instance.NumberOfRerollsUsed++;
     }
 
     private void CheckTopSide()

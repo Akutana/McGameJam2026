@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public static event Action OnShopTransitionFinised;
     public int TotalEnemiesDefeated { get; set; } = 0;
     public int NumberofRerolls { get; set; } = 3;
+    public int NumberOfRerollsUsed = 0;
     public int Currency { get; set; } = 0;
 
     public int additionalDamage;
@@ -106,6 +107,7 @@ public class GameManager : MonoBehaviour
 
     public void StartPlayerTurn()
     {
+        NumberOfRerollsUsed = 0;
         NumberofRerolls = 3;
         CurrentTurn = TurnState.PlayerTurn;
 
@@ -144,6 +146,8 @@ public class GameManager : MonoBehaviour
 
     public void OnEndTurnButtonPressed()
     {
+        if (NumberOfRerollsUsed == 0)
+            return;
 
         // Handle shopping turn FIRST, before any other checks
         if (CurrentTurn == TurnState.ShoppingTurn)

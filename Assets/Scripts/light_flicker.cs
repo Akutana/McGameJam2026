@@ -6,8 +6,8 @@ public class CreepySpotlightFlicker : MonoBehaviour
 {
     [Header("References")]
     public Light spotLight;
-    [SerializeField] private List<Enemies> enemies;
-    [SerializeField] public Enemies currentEnemy;
+    [SerializeField] private List<EnemyData> enemies;
+    [SerializeField] public EnemyData currentEnemy;
     [SerializeField] private Transform planePos;
     [SerializeField] private GameObject enemyVisualPrefab;
 

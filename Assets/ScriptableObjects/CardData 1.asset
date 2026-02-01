@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ac4740dcac360648b7d42e708946311, type: 3}
   m_Name: CardData 1
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  cardName: Pissy pants
-  description: my bad gang
-  art: {fileID: 0}
+  cardName: Magic heal
+  description: Heals you back
+  art: {fileID: -411175242, guid: 49a312086c263dc42bb1a4e9f16318e2, type: 3}
   price: 2
+  type: 0
+  value: 25

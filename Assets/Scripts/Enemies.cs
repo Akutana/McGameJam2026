@@ -1,10 +1,10 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Enemies", menuName = "Scriptable Objects/Enemies")]
-public class Enemies : ScriptableObject
+public class EnemyData : ScriptableObject
 {
-    public string cardName;
+    public string enemyName;
     public int damage;
-    public int health;
+    public int maxHealth;
     public Sprite art;
 }

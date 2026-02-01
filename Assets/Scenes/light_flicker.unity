@@ -119,60 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &83756649
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 83756651}
-  - component: {fileID: 83756650}
-  m_Layer: 0
-  m_Name: HandManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &83756650
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 83756649}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91abba4ff2ced1c47aa5ec8cc48df98a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HandManager
-  maxHandSize: 5
-  drawNumber: 3
-  spawnPoint: {fileID: 786551698}
-  splineContainer: {fileID: 931635761}
-  cardPrefab: {fileID: 282516061887738462, guid: 0e76c06c6213e814abb715503963f32e, type: 3}
-  availableCards:
-  - {fileID: 11400000, guid: b1c85dfab9d1d654ea032a78882ba6c1, type: 2}
-  - {fileID: 11400000, guid: e49abe4b887f20c40a9461cbe5d8c851, type: 2}
-  - {fileID: 11400000, guid: 4388e64ca53cb474a958757bd781da83, type: 2}
-  lightFlicker: {fileID: 1031542601}
---- !u!4 &83756651
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 83756649}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &391391076
 GameObject:
   m_ObjectHideFlags: 0
@@ -956,6 +902,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b7031bc054903c442a8e9129ddf502c6, type: 2}
   - {fileID: 11400000, guid: cb022b1739110bd4e80aebde8c91b534, type: 2}
   - {fileID: 11400000, guid: 8fcdf02de6f9e8f4093ca0b76fedbdc2, type: 2}
+  currentEnemy: {fileID: 0}
   planePos: {fileID: 1465879246}
   enemyVisualPrefab: {fileID: 1465879245}
   baseIntensity: 200
@@ -968,6 +915,65 @@ MonoBehaviour:
   moveDuration: 2
   minSpriteAlpha: 0.2
   maxSpriteAlpha: 1
+--- !u!1 &1165382217
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1165382220}
+  - component: {fileID: 1165382219}
+  - component: {fileID: 1165382218}
+  m_Layer: 0
+  m_Name: Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1165382218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165382217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 450c76b5cca98e94cbd061811915e61f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
+  maxHealth: 100
+  health: {fileID: 1165382219}
+--- !u!114 &1165382219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165382217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36af2f0a605b7a1478337d6c33f0bc3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+--- !u!4 &1165382220
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165382217}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 835.8393, y: 0, z: 2504.0137}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1179472971
 GameObject:
   m_ObjectHideFlags: 0
@@ -1304,6 +1310,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8933842803812283849, guid: f3632306b2c680142a3e82092d6b90ff, type: 3}
   m_PrefabInstance: {fileID: 1465879244}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1554777308
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1554777310}
+  - component: {fileID: 1554777309}
+  m_Layer: 0
+  m_Name: HandManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1554777309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554777308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91abba4ff2ced1c47aa5ec8cc48df98a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HandManager
+  maxHandSize: 5
+  drawNumber: 3
+  spawnPoint: {fileID: 786551698}
+  splineContainer: {fileID: 931635761}
+  cardPrefab: {fileID: 282516061887738462, guid: 0e76c06c6213e814abb715503963f32e, type: 3}
+  availableCards:
+  - {fileID: 11400000, guid: b1c85dfab9d1d654ea032a78882ba6c1, type: 2}
+  - {fileID: 11400000, guid: e49abe4b887f20c40a9461cbe5d8c851, type: 2}
+  - {fileID: 11400000, guid: 4388e64ca53cb474a958757bd781da83, type: 2}
+  lightFlicker: {fileID: 1031542601}
+  player: {fileID: 1165382217}
+  currentEnemy: {fileID: 1465879245}
+--- !u!4 &1554777310
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554777308}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1588640201
 GameObject:
   m_ObjectHideFlags: 0
@@ -1801,7 +1863,8 @@ SceneRoots:
   - {fileID: 1280440788}
   - {fileID: 946372092}
   - {fileID: 786551698}
-  - {fileID: 83756651}
   - {fileID: 1866408976}
   - {fileID: 810297778}
   - {fileID: 1465879244}
+  - {fileID: 1554777310}
+  - {fileID: 1165382220}

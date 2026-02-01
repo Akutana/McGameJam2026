@@ -12,9 +12,10 @@ public class GameManager : MonoBehaviour
     public static event Action OnPlayerTurnStarted;
     public static event System.Action<GameManager.TurnState> OnTurnChanged;
     public static event Action OnShopTurnStarted;
- 	public int TotalEnemiesDefeated { get; set; } = 0;
+    public int TotalEnemiesDefeated { get; set; } = 0;
     public int NumberofRerolls { get; set; } = 3;
-    
+    public int Currency { get; set; } = 0;
+
     public enum TurnState
     {
         None,
@@ -24,6 +25,23 @@ public class GameManager : MonoBehaviour
     }
 
     public TurnState CurrentTurn { get; private set; } = TurnState.None;
+
+    [Header("Difficulty Scaling")]
+    [SerializeField] private float healthIncreasePerKill = 2f; // +2 health per enemy killed
+    [SerializeField] private float damageIncreasePerKill = 1f;
+
+    [Header("Turn Timing")]
+    [SerializeField] private float delayBeforePlayerTurn = 1.5f; // Delay after enemy attacks
+
+    public float GetHealthMultiplier()
+    {
+        return 1f + (TotalEnemiesDefeated * healthIncreasePerKill / 10f); // Scales gradually
+    }
+
+    public float GetDamageMultiplier()
+    {
+        return 1f + (TotalEnemiesDefeated * damageIncreasePerKill / 10f); // Scales gradually
+    }
 
     private void Awake()
     {
@@ -41,13 +59,13 @@ public class GameManager : MonoBehaviour
     public void ResetGame()
     {
         Debug.Log("Resetting game");
-        // reset game state here later
+        TotalEnemiesDefeated = 0;
+        Currency = 0;
     }
 
     public void StartGame()
     {
         SceneManager.LoadScene("light_flicker");
-
         StartPlayerTurn();
     }
 
@@ -58,7 +76,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("Player Turn");
 
         OnPlayerTurnStarted?.Invoke();
-
         OnTurnChanged?.Invoke(CurrentTurn);
     }
 
@@ -85,8 +102,9 @@ public class GameManager : MonoBehaviour
             if (CreepySpotlightFlicker.Instance.currentEnemy.health <= 0)
             {
                 TotalEnemiesDefeated++;
-                Debug.Log("Enemy defeated! Total enemies defeated: " + TotalEnemiesDefeated);
+                Debug.Log($"Enemy defeated! Total: {TotalEnemiesDefeated} | Next enemy health multiplier: {GetHealthMultiplier():F2}x | damage multiplier: {GetDamageMultiplier():F2}x");
                 CreepySpotlightFlicker.Instance.OnEnemyDied();
+                Currency += 5;
                 StartShoppingTurn();
                 return; // Don't continue to normal enemy turn
             }
@@ -107,7 +125,8 @@ public class GameManager : MonoBehaviour
     {
         CreepySpotlightFlicker.Instance?.EnemyAction();
 
-        StartPlayerTurn();
+        // Add delay before returning to player turn
+        Invoke(nameof(StartPlayerTurn), delayBeforePlayerTurn);
     }
 
     public void StartEnemyTurn()
@@ -116,8 +135,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("Enemy Turn");
 
         OnTurnChanged?.Invoke(CurrentTurn);
-
-   
 
         Invoke(nameof(EndEnemyTurn), 1f);
     }

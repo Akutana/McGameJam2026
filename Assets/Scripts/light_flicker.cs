@@ -59,6 +59,8 @@ public class CreepySpotlightFlicker : MonoBehaviour
 
     }
 
+
+
     public void IntroduceEnemy()
     {
         StartCoroutine(ToggleEnemySequence());
@@ -135,6 +137,18 @@ public class CreepySpotlightFlicker : MonoBehaviour
         // Create a runtime copy using Instantiate
         currentEnemy = Instantiate(enemyTemplate);
 
+        // Apply difficulty scaling
+        if (GameManager.Instance != null)
+        {
+            float healthMultiplier = GameManager.Instance.GetHealthMultiplier();
+            float damageMultiplier = GameManager.Instance.GetDamageMultiplier();
+
+            currentEnemy.health = Mathf.RoundToInt(currentEnemy.health * healthMultiplier);
+            currentEnemy.damage = Mathf.RoundToInt(currentEnemy.damage * damageMultiplier);
+
+            Debug.Log($"Spawned enemy with {currentEnemy.health} health ({healthMultiplier:F2}x) and {currentEnemy.damage} damage ({damageMultiplier:F2}x)");
+        }
+
         currentEnemyVisual = Instantiate(
             enemyVisualPrefab,
             planePos.position,
@@ -151,6 +165,8 @@ public class CreepySpotlightFlicker : MonoBehaviour
 
         StartCoroutine(FadeSprite(0f, 1f, 0.3f));
     }
+
+
     private IEnumerator ShortFlicker(float duration)
     {
         float elapsed = 0f;

@@ -173,6 +173,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &176262841
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 176262843}
+  - component: {fileID: 176262842}
+  m_Layer: 0
+  m_Name: DiceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &176262842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176262841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecefd128cba1da14ab64957a34ab5d70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DiceManager
+--- !u!4 &176262843
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176262841}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.74419, y: -0.51, z: 0.89404}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &391391076
 GameObject:
   m_ObjectHideFlags: 0
@@ -956,6 +1000,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b7031bc054903c442a8e9129ddf502c6, type: 2}
   - {fileID: 11400000, guid: cb022b1739110bd4e80aebde8c91b534, type: 2}
   - {fileID: 11400000, guid: 8fcdf02de6f9e8f4093ca0b76fedbdc2, type: 2}
+  currentEnemy: {fileID: 0}
   planePos: {fileID: 1465879246}
   enemyVisualPrefab: {fileID: 1465879245}
   baseIntensity: 200
@@ -1805,3 +1850,4 @@ SceneRoots:
   - {fileID: 1866408976}
   - {fileID: 810297778}
   - {fileID: 1465879244}
+  - {fileID: 176262843}

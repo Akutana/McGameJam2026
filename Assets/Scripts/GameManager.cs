@@ -62,21 +62,50 @@ public class GameManager : MonoBehaviour
         OnTurnChanged?.Invoke(CurrentTurn);
     }
 
-   public void OnEndTurnButtonPressed()
+    public void OnEndTurnButtonPressed()
     {
         if (DiceManager.Instance.AreAnyDiceRolling())
         {
             return;
         }
-
         Debug.Log("End Turn Button Pressed");
-
         if (CurrentTurn != TurnState.PlayerTurn) return;
 
         // Clear the hand using the singleton
         HandManager.Instance?.ClearHand();
 
+        // Only deal damage if we're NOT in shopping turn and enemy exists
+        if (CurrentTurn != TurnState.ShoppingTurn && CreepySpotlightFlicker.Instance != null && CreepySpotlightFlicker.Instance.currentEnemy != null)
+        {
+            int damage = DiceManager.Instance.GetTotalDiceValue();
+            CreepySpotlightFlicker.Instance.currentEnemy.health -= damage;
+            Debug.Log("Dealt " + damage + " damage to enemy.");
+
+            // Check if enemy died
+            if (CreepySpotlightFlicker.Instance.currentEnemy.health <= 0)
+            {
+                TotalEnemiesDefeated++;
+                Debug.Log("Enemy defeated! Total enemies defeated: " + TotalEnemiesDefeated);
+                CreepySpotlightFlicker.Instance.OnEnemyDied();
+                StartShoppingTurn();
+                return; // Don't continue to normal enemy turn
+            }
+        }
+
         StartEnemyTurn();
+    }
+
+    public void StartShoppingTurn()
+    {
+        CurrentTurn = TurnState.ShoppingTurn;
+        Debug.Log("Shopping Turn");
+        OnShopTurnStarted?.Invoke();
+        OnTurnChanged?.Invoke(CurrentTurn);
+    }
+
+    public void EndEnemyTurn()
+    {
+        StartPlayerTurn();
     }
 
     public void StartEnemyTurn()
@@ -86,23 +115,10 @@ public class GameManager : MonoBehaviour
 
         OnTurnChanged?.Invoke(CurrentTurn);
 
-        if(CreepySpotlightFlicker.Instance != null)
-        {
-            CreepySpotlightFlicker.Instance.currentEnemy.health -= DiceManager.Instance.GetTotalDiceValue(); ;
-        }
+   
 
         Invoke(nameof(EndEnemyTurn), 1f);
     }
-
-    public void EndEnemyTurn()
-    {
-        if (true)
-        {
-            MoveToShop();
-        }
-        StartPlayerTurn();
-    }
-
 
     public void RestartGame()
     {
@@ -135,10 +151,5 @@ public class GameManager : MonoBehaviour
 #else
         Application.Quit();
 #endif
-    }
-
-    private void MoveToShop()
-    {
-        OnShopTurnStarted?.Invoke();
     }
 }

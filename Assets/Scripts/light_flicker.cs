@@ -35,6 +35,14 @@ public class CreepySpotlightFlicker : MonoBehaviour
 
     private void Start()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
+
         if (spotLight == null)
             spotLight = GetComponent<Light>();
 

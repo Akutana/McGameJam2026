@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
     private string previousScene;
     public static event Action OnPlayerTurnStarted;
     public static event System.Action<GameManager.TurnState> OnTurnChanged;
+
+    public int TotalEnemiesDefeated { get; set; } = 0;
+    public int NumberofRerolls { get; set; } = 3;
     public enum TurnState
     {
         None,
@@ -40,13 +43,14 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("Xavier2");
+        SceneManager.LoadScene("light_flicker");
 
         StartPlayerTurn();
     }
 
     public void StartPlayerTurn()
     {
+        NumberofRerolls = 3;
         CurrentTurn = TurnState.PlayerTurn;
         Debug.Log("Player Turn");
 
@@ -56,15 +60,14 @@ public class GameManager : MonoBehaviour
     }
 
    public void OnEndTurnButtonPressed()
-{
-    if (CurrentTurn != TurnState.PlayerTurn) return;
+    {
+        if (CurrentTurn != TurnState.PlayerTurn) return;
 
-    // Clear the hand using the singleton
-    HandManager.Instance?.ClearHand();
+        // Clear the hand using the singleton
+        HandManager.Instance?.ClearHand();
 
-    Debug.Log("Player pressed End Turn");
     StartEnemyTurn();
-}
+    }
 
     public void StartEnemyTurn()
     {
@@ -73,7 +76,11 @@ public class GameManager : MonoBehaviour
 
         OnTurnChanged?.Invoke(CurrentTurn);
 
-        // TEMP: automatically end enemy turn after 1 second
+        if(CreepySpotlightFlicker.Instance != null)
+        {
+            CreepySpotlightFlicker.Instance.currentEnemy.health -= 10;
+        }
+
         Invoke(nameof(EndEnemyTurn), 1f);
     }
 
@@ -86,7 +93,7 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         ResetGame();
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("Xavier2");
     }
 
     public void DisplaySettings()

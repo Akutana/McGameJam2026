@@ -27,27 +27,28 @@ public class DiceRoller : MonoBehaviour
     {
         if (rb == null) { return; }
 
-        if (rb.linearVelocity.magnitude < 0.1f)
-        {
-            CheckTopSide();
-        }
-
         if (rb.IsSleeping())
         {
+            CheckTopSide();
             isRolling = false;
         }
 
-        TextLogic();
+
+         TextLogic();
+       
     }
 
     private void OnMouseOver()
     {
-        textMesh.enabled = true;
-
-        if (Input.GetMouseButtonDown(0) && !isRolling)
+        if (GameManager.Instance.NumberofRerolls > 0)
         {
-            isRolling = true;
-            RollDice();
+            textMesh.enabled = true;
+
+            if (Input.GetMouseButtonDown(0) && !isRolling)
+            {
+                isRolling = true;
+                RollDice();
+            }
         }
     }
 
@@ -66,6 +67,8 @@ public class DiceRoller : MonoBehaviour
 
         rb.AddForce(Vector3.up * rollingForce);
         rb.AddTorque(forceX, forceY, forceZ);
+
+        GameManager.Instance.NumberofRerolls--;
     }
 
     private void CheckTopSide()

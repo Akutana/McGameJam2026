@@ -1,13 +1,16 @@
-using UnityEngine;
 using System;
-using UnityEngine.SceneManagement;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 using UnityEngine.Splines.Interpolators;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-
+    public TextMeshProUGUI currencyDisplay;
+    public Image currencyIcon;
     private string previousScene;
     public static event Action OnPlayerTurnStarted;
     public static event System.Action<GameManager.TurnState> OnTurnChanged;
@@ -68,6 +71,7 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
+        currencyDisplay.text = Currency.ToString();
         DontDestroyOnLoad(gameObject);
     }
 
@@ -75,12 +79,52 @@ public class GameManager : MonoBehaviour
     {
         TotalEnemiesDefeated = 0;
         Currency = 0;
+        currencyDisplay.text = Currency.ToString();
     }
 
     public void StartGame()
     {
         SceneManager.LoadScene("light_flicker");
+        SceneManager.sceneLoaded += OnGameSceneLoaded;
         StartPlayerTurn();
+    }
+
+    private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "light_flicker")
+        {
+            SceneManager.sceneLoaded -= OnGameSceneLoaded;
+            ShowCurrency();
+            StartPlayerTurn();
+        }
+    }
+
+    public void ShowCurrency()
+    {
+        Color c = currencyDisplay.color;
+        c.a = 1f;
+        currencyDisplay.color = c;
+
+
+        c = currencyIcon.color;
+        c.a = 1f;
+        currencyIcon.color = c;
+    }
+
+    public void HideCurrency()
+    {
+        Color c = currencyDisplay.color;
+        c.a = 0f;
+        currencyDisplay.color = c;
+
+        c = currencyIcon.color;
+        c.a = 0f;
+        currencyIcon.color = c;
+    }
+
+    public void UpdateCurrencyDisplay()
+    {
+        currencyDisplay.text = Currency.ToString();
     }
 
     public void StartPlayerTurn()
@@ -151,6 +195,7 @@ public class GameManager : MonoBehaviour
                 // Trigger death animation
                 CreepySpotlightFlicker.Instance.OnEnemyDied();
                 Currency += 5;
+                currencyDisplay.text = Currency.ToString();
 
                 // Wait for death animation before going to shop
                 Invoke(nameof(StartShoppingTurn), deathAnimationDelay);
@@ -220,6 +265,7 @@ public class GameManager : MonoBehaviour
     {
         previousScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene("Settings");
+        HideCurrency();
     }
 
     public void LoadPreviousScene()
@@ -228,6 +274,7 @@ public class GameManager : MonoBehaviour
         if (string.IsNullOrEmpty(previousScene))
         {
             SceneManager.LoadScene("StartingMenu");
+            HideCurrency();
             return;
         }
 

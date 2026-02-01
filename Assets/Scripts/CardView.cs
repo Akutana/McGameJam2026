@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using TMPro;
 
 public class CardView : MonoBehaviour
 {
@@ -7,6 +8,10 @@ public class CardView : MonoBehaviour
      private HandManager handManager;
     private Vector3 originalScale;
     private bool isHovered;
+    private TextMeshPro cardNameText;
+    private TextMeshPro cardDescText;
+
+    public GameObject cardDescPos;
 
     private void Awake()
     {
@@ -18,6 +23,14 @@ public class CardView : MonoBehaviour
         isHovered = true;
         transform.DOScale(originalScale * 1.15f, 0.15f);
         TooltipUI.Instance.Show(cardData.description);
+        cardNameText = gameObject.transform.GetChild(0).transform.GetComponent<TextMeshPro>();
+        cardDescText = gameObject.transform.GetChild(1).transform.GetComponent<TextMeshPro>();
+
+        cardNameText.text = cardData.cardName;
+        cardDescText.text = cardData.description;
+        cardDescText.transform.rotation = Quaternion.identity;
+
+        cardDescText.transform.position = new Vector3(handManager.GetMiddleCardPosX(), cardDescText.transform.position.y, cardDescText.transform.position.z);
     }
 
     private void OnMouseExit()
@@ -25,6 +38,8 @@ public class CardView : MonoBehaviour
         isHovered = false;
         transform.DOScale(originalScale, 0.15f);
         TooltipUI.Instance.Hide();
+        cardNameText.text = "";
+        cardDescText.text = "";
     }
 
     private void OnMouseDown()

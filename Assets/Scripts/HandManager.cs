@@ -1,8 +1,12 @@
 using DG.Tweening;
+using JetBrains.Annotations;
 using NUnit.Framework;
 using System.Collections.Generic;
+using UnityEditor.Splines;
 using UnityEngine;
 using UnityEngine.Splines;
+using Unity.Mathematics;
+using System.Reflection;
 
 public class HandManager : MonoBehaviour
 {
@@ -83,7 +87,6 @@ public class HandManager : MonoBehaviour
             handCards[i].transform.DOMove(splinePosition, 0.25f);
             handCards[i].transform.DORotateQuaternion(rotation, 0.25f);
         }
-
     }
 
     private void OnEnable()
@@ -118,4 +121,29 @@ public class HandManager : MonoBehaviour
         handCards.Clear();
     }
 
+    public float3 GetSplinePoint(float index)
+    {
+        return splineContainer.EvaluatePosition(index);
+    }
+
+    public float GetMiddleCardPosX()
+    {
+        if (handCards.Count == 3)
+            return handCards[1].transform.position.x;
+        else if (handCards.Count == 2)
+        {
+            float biggerX;
+            float smallerX;
+
+            biggerX = Mathf.Max(handCards[1].transform.position.x, handCards[0].transform.position.x);
+            smallerX = Mathf.Min(handCards[1].transform.position.x, handCards[0].transform.position.x);
+
+            return smallerX + (biggerX - smallerX) / 2;
+        }
+
+        else if (handCards.Count == 1)
+            return handCards[0].transform.position.x;
+        else
+            return 0.0f;
+    }
 }

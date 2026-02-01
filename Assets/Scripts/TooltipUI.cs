@@ -16,7 +16,7 @@ public class TooltipUI : MonoBehaviour
 
     public void Show(string message)
     {
-        text.text = message;
+        //text.text = message;
         root.SetActive(true);
     }
 

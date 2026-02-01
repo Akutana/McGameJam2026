@@ -1328,7 +1328,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -2282498538783896688, guid: 5c83395ccddecbe4bbb9aff1a99cabac, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 7ef708d0cccbf874193cf209bccb6456, type: 3}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1441,6 +1441,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16a717f36d247304f9d44b2273301413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MusicPlayer
+  mainTheme: {fileID: 8300000, guid: 4eb30bcb32de515489119b4c646e4542, type: 3}
+  shopTheme: {fileID: 8300000, guid: 938dd2b86e80eb74591cfc0654e04497, type: 3}
+  lowHpTheme: {fileID: 8300000, guid: 750a6ad6e5e5f1f49929cba06a7936e9, type: 3}
+  gameOverTheme: {fileID: 8300000, guid: 1b46e1d5b29fe344ba71b4c343da30e4, type: 3}
+  fadeDuration: 1.5
 --- !u!82 &1486241285
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1450,13 +1455,13 @@ AudioSource:
   m_GameObject: {fileID: 1486241281}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -1062483647037928555, guid: 5c83395ccddecbe4bbb9aff1a99cabac, type: 2}
+  OutputAudioMixerGroup: {fileID: -2282498538783896688, guid: 5c83395ccddecbe4bbb9aff1a99cabac, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

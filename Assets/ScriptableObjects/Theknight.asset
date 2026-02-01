@@ -10,13 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ac4740dcac360648b7d42e708946311, type: 3}
-  m_Name: MightyReroll
+  m_Name: Theknight
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  cardName: Mighty reroll
-  description: 'Get one more reroll this turn
-
-'
-  art: {fileID: 1065545621, guid: df6188e013a5ec249abcd4e3acf89df3, type: 3}
-  price: 5
-  type: 2
-  value: 1
+  cardName: The Knight
+  description: Direct hit opponent for 5 damage
+  art: {fileID: -1863314312, guid: 1a0855e7ddc5c874cbfc666bc65f6ab9, type: 3}
+  price: 2
+  type: 1
+  value: 5

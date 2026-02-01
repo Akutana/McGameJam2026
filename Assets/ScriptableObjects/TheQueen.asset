@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ac4740dcac360648b7d42e708946311, type: 3}
   m_Name: TheQueen
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  cardName: The queen
+  cardName: The Queen
   description: Get 2 more rolls this turn
-  art: {fileID: -1863314312, guid: 1a0855e7ddc5c874cbfc666bc65f6ab9, type: 3}
+  art: {fileID: 1065545621, guid: df6188e013a5ec249abcd4e3acf89df3, type: 3}
   price: 4
   type: 2
   value: 2

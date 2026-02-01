@@ -19,12 +19,16 @@ public class Card
     public GameObject cardObject;
     public CardType cardType;
     public float cardValue;
+    public Sprite cardSprite;
 
-    public Card(GameObject obj, CardType type, float value)
+    public Card(GameObject obj, CardType type, float value, Sprite sprite)
     {
         cardObject = obj;
         cardType = type;
         cardValue = value;
+        cardSprite = sprite;
+
+        cardObject.GetComponent<SpriteRenderer>().sprite = cardSprite;
     }
 }
 
@@ -154,7 +158,8 @@ public class HandManager : MonoBehaviour
         Card newCard = new Card(
             g,
             data.type,
-            data.value
+            data.value,
+            data.art
         );
 
         handCards.Add(newCard);
@@ -265,7 +270,7 @@ public class HandManager : MonoBehaviour
 
         else
         {
-            //currentEnemy.GetComponent<Health>().DealDamage(card.cardValue);
+            GameManager.Instance.AddDamageToPlayerTurn((int)card.cardValue);
             Debug.Log("Damage card played by player");
         }
     }

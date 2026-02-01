@@ -23,8 +23,8 @@ public class CardView : MonoBehaviour
         cardDescText = transform.GetChild(1).GetComponent<TextMeshPro>();
 
         DisableInteractionTemporarily(2f);
-
-        gameObject.GetComponent<SpriteRenderer>().sprite = cardData.art;
+        //Debug.Log(cardData.cardName);
+        //gameObject.GetComponent<SpriteRenderer>().sprite = cardData.art;
     }
 
     private void OnMouseEnter()
@@ -146,6 +146,6 @@ public class CardView : MonoBehaviour
 
     private Card ConvertToCardClass()
     {
-        return new Card(gameObject, cardData.type, cardData.value);
+        return new Card(gameObject, cardData.type, cardData.value, cardData.art);
     }
 }

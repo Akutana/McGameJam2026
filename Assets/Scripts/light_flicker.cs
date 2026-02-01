@@ -56,7 +56,7 @@ public class CreepySpotlightFlicker : MonoBehaviour
 
     private void Update()
     {
-
+        //Debug.Log("enemy health" + Instance.currentEnemy.maxHealth);
     }
 
 

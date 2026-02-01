@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     public int NumberofRerolls { get; set; } = 3;
     public int Currency { get; set; } = 0;
 
+    public int additionalDamage;
+
     public enum TurnState
     {
         None,
@@ -78,6 +80,7 @@ public class GameManager : MonoBehaviour
 
         OnPlayerTurnStarted?.Invoke();
         OnTurnChanged?.Invoke(CurrentTurn);
+        additionalDamage = 0;
     }
 
     public void OnEndTurnButtonPressed()
@@ -121,7 +124,7 @@ public class GameManager : MonoBehaviour
         // Only deal damage if enemy exists
         if (CreepySpotlightFlicker.Instance != null && CreepySpotlightFlicker.Instance.currentEnemy != null)
         {
-            int damage = DiceManager.Instance.GetTotalDiceValue();
+            int damage = DiceManager.Instance.GetTotalDiceValue() + additionalDamage;
             CreepySpotlightFlicker.Instance.currentEnemy.maxHealth -= damage;
             Debug.Log("Dealt " + damage + " damage to enemy.");
 
@@ -188,6 +191,11 @@ public class GameManager : MonoBehaviour
         }
 
         Invoke(nameof(EndEnemyTurn), 1f);
+    }
+
+    public void AddDamageToPlayerTurn(int amount)
+    {
+        additionalDamage += amount;
     }
 
     public void RestartGame()

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Twin towers
   description: deals 9 to 11 damage
-  art: {fileID: 21300000, guid: 89d2ee46fc405654ba8c2b2ab5ee5a7e, type: 3}
-  price: 3
+  art: {fileID: -1107335815, guid: 7b9cb130b387a4442b30cba23a672ade, type: 3}
+  price: 10
   type: 1
-  value: 0
+  value: 911

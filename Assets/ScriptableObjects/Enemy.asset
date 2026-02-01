@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemies
   enemyName: 
   damage: 3
-  maxHealth: 0
+  maxHealth: 50
   art: {fileID: -535253038, guid: 2844cfe8e2c3448409bf49fd53f0a759, type: 3}

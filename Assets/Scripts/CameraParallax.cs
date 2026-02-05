@@ -7,7 +7,7 @@ public class CameraParallax : MonoBehaviour
     public Vector2 clampY = new Vector2(-0.2f, 0.2f);
     public float smoothSpeed = 5f;
     private Vector3 originalPos = new Vector3(0, 0, 0);
-    private Vector3 shopPos = new Vector3(0, 0, -20);
+    private Vector3 shopPos = new Vector3(0.543f, 0.889f, -1);
     private Vector3 targetPosition;
     private Quaternion targetRotation;
     private Quaternion originalRotation;

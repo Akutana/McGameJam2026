@@ -9,7 +9,6 @@ public class CardData : ScriptableObject
 
     public Sprite art;
     public int price;
-    public CardType type;
     public float value;
 
     public void Play()
